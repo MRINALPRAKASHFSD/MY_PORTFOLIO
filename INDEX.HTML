@@ -174,8 +174,20 @@ section{padding:5rem 2rem}
 /* tools */
 .tools-section-label{font-family:'Share Tech Mono',monospace;font-size:.7rem;color:var(--cyan);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.75rem;padding-bottom:.4rem;border-bottom:1px solid rgba(0,229,255,.12);text-align:left}
 .tools-grid{display:flex;flex-wrap:wrap;gap:.45rem}
-.tool-pill{background:rgba(255,255,255,.04);border:1px solid var(--bdr);padding:.28rem .75rem;border-radius:100px;font-size:.72rem;font-family:'Share Tech Mono',monospace;transition:all .2s;cursor:default}
-.tool-pill:hover{border-color:var(--cyan);color:var(--cyan);background:rgba(0,229,255,.06)}
+
+/* ── TECH STACK PILL CATEGORIES ── */
+.ts-block{margin-bottom:1.6rem}
+.ts-cat-head{display:flex;align-items:center;gap:.75rem;margin-bottom:.75rem;padding-bottom:.4rem;border-bottom:1px solid rgba(255,255,255,.05)}
+.ts-cat-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;animation:dotPulse 2.5s ease-in-out infinite;flex-shrink:0}
+.ts-cat-lbl{font-family:'Space Grotesk',sans-serif;font-size:.78rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;opacity:.9}
+.ts-pills{display:flex;flex-wrap:wrap;gap:.55rem}
+.tp{display:inline-block;padding:.42rem 1.05rem;border-radius:100px;font-size:.8rem;font-weight:600;font-family:'Space Grotesk',sans-serif;cursor:default;border:1.5px solid;transition:all .25s;animation:pillFloat ease-in-out infinite;letter-spacing:.02em}
+@keyframes pillFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+@keyframes dotPulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.5);opacity:.7}}
+.tp:hover{transform:translateY(-6px) scale(1.08)!important;filter:brightness(1.4);z-index:2;position:relative}
+
+.tool-pill{background:rgba(255,255,255,.04);border:1px solid var(--bdr);padding:.28rem .8rem;border-radius:100px;font-size:.7rem;font-family:'Share Tech Mono',monospace;transition:all .2s;cursor:default;color:var(--muted)}
+.tool-pill:hover{border-color:var(--cyan);color:var(--cyan);background:rgba(0,229,255,.06);transform:translateY(-2px)}
 
 /* ========== SKILLS — SAME LAYOUT AS EXPERIENCE ========== */
 #skills{background:var(--bg);position:relative;overflow:hidden}
