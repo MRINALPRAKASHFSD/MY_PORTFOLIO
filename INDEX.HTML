@@ -141,13 +141,28 @@ section{padding:5rem 2rem}
 /* ABOUT */
 #about{background:rgba(5,10,20,.8);position:relative;overflow:hidden}
 #about::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 800px 400px at 80% 50%,rgba(23,85,167,.06),transparent)}
-.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start}
-.edu-showcase{display:flex;flex-direction:column;gap:1.2rem}
-.edu-card{position:relative;background:var(--card);backdrop-filter:blur(12px);border:1px solid var(--bdr);border-radius:16px;padding:1.4rem 1.25rem;display:flex;align-items:center;gap:1.2rem;overflow:hidden;cursor:default;transition:all .4s cubic-bezier(.175,.885,.32,1.275)}
-.edu-card::before{content:'';position:absolute;top:0;left:0;width:4px;bottom:0;background:hsl(var(--hue),100%,50%);box-shadow:0 0 15px hsl(var(--hue),100%,50%);transition:width .3s ease}
-.edu-card::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,hsla(var(--hue),100%,50%,.1),transparent);opacity:0;transition:opacity .3s ease;pointer-events:none}
-.edu-card:hover{transform:translateX(10px) translateY(-2px);border-color:hsla(var(--hue),100%,50%,.4);box-shadow:0 10px 30px rgba(0,0,0,.5)}
-.edu-card:hover::before{width:6px}
+/* about layout - full width stacked */
+.about-inner{display:flex;flex-direction:column;gap:2.4rem}
+/* quote strip */
+.about-quote{background:linear-gradient(135deg,rgba(23,85,167,.12),rgba(0,229,255,.04));border:1px solid rgba(0,229,255,.15);border-radius:16px;padding:1.4rem 2rem;position:relative;overflow:hidden}
+.about-quote::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--cyan),var(--blue2),transparent)}
+.about-quote::after{content:'ENFJ';position:absolute;right:1.5rem;top:50%;transform:translateY(-50%);font-family:'Syne',sans-serif;font-size:3.5rem;font-weight:800;color:rgba(0,229,255,.04);pointer-events:none}
+.mbti-tag{font-family:'Share Tech Mono',monospace;font-size:.72rem;color:var(--cyan);margin-bottom:.5rem;text-align:left;letter-spacing:.06em}
+.mbti-q{font-size:.92rem;font-style:italic;line-height:1.7;color:var(--text);text-align:left}
+/* stats row */
+.about-stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}
+.sc{background:rgba(255,255,255,.042);border:1px solid var(--bdr);border-radius:14px;padding:1.2rem 1rem;text-align:center;transition:all .3s;position:relative;overflow:hidden}
+.sc::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,rgba(0,229,255,.3),transparent)}
+.sc:hover{border-color:rgba(0,229,255,.25);transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,.4)}
+.sc-n{font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;background:linear-gradient(135deg,var(--cyan),var(--blue2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1}
+.sc-l{font-size:.65rem;color:var(--muted);margin-top:.35rem;font-family:'Share Tech Mono',monospace;letter-spacing:.04em;text-transform:uppercase}
+/* edu grid - HORIZONTAL 4-column */
+.edu-section-label{font-family:'Share Tech Mono',monospace;font-size:.7rem;color:var(--cyan);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.9rem;padding-bottom:.4rem;border-bottom:1px solid rgba(0,229,255,.12);text-align:left}
+.edu-showcase{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}
+.edu-card{position:relative;background:rgba(255,255,255,.042);border:1px solid var(--bdr);border-radius:14px;padding:1.1rem 1rem 1rem;display:flex;flex-direction:column;gap:.55rem;overflow:hidden;cursor:default;transition:all .35s cubic-bezier(.175,.885,.32,1.275);min-height:120px}
+.edu-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,hsl(var(--hue),100%,55%),hsl(var(--hue),80%,70%),transparent);box-shadow:0 0 10px hsla(var(--hue),100%,55%,.4);transition:opacity .3s}
+.edu-card::after{content:'';position:absolute;inset:0;background:linear-gradient(160deg,hsla(var(--hue),100%,50%,.06) 0%,transparent 60%);opacity:0;transition:opacity .3s;pointer-events:none}
+.edu-card:hover{transform:translateY(-5px);border-color:hsla(var(--hue),100%,55%,.35);box-shadow:0 14px 36px rgba(0,0,0,.5),0 0 0 1px hsla(var(--hue),100%,55%,.08)}
 .edu-card:hover::after{opacity:1}
 .ec-icon{width:54px;height:54px;border-radius:12px;background:hsla(var(--hue),100%,50%,.1);border:1px solid hsla(var(--hue),100%,50%,.2);display:flex;align-items:center;justify-content:center;font-size:1.6rem;flex-shrink:0;z-index:2;transition:transform .4s}
 .edu-card:hover .ec-icon{transform:scale(1.1) rotate(-5deg);background:hsla(var(--hue),100%,50%,.2);box-shadow:0 0 20px hsla(var(--hue),100%,50%,.3)}
