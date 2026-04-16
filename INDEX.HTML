@@ -47,8 +47,16 @@ body{background:var(--bg);color:var(--text);font-family:'Space Grotesk',sans-ser
 nav{position:fixed;top:0;left:0;right:0;z-index:999;padding:.9rem 2rem;display:flex;justify-content:space-between;align-items:center;background:rgba(3,7,15,.9);backdrop-filter:blur(10px);border-bottom:1px solid rgba(0,229,255,.06)}
 .logo{font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:800;background:linear-gradient(135deg,var(--cyan),var(--blue2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-decoration:none}
 .nav-links{display:flex;gap:1.4rem;list-style:none}
-.nav-links a{color:var(--muted);text-decoration:none;font-size:.8rem;font-weight:500;letter-spacing:.05em;text-transform:uppercase;transition:color .2s}
-.nav-links a:hover{color:var(--cyan)}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:.8rem;font-weight:500;letter-spacing:.05em;text-transform:uppercase;transition:color .3s;animation:navColorWave 12s linear infinite}
+.nav-links a:hover{color:#fff!important;text-shadow:0 0 12px rgba(165,243,252,.8)}
+
+/* Nav link stagger */
+.nav-links li:nth-child(1) a{animation-delay:0s}
+.nav-links li:nth-child(2) a{animation-delay:-2.4s}
+.nav-links li:nth-child(3) a{animation-delay:-4.8s}
+.nav-links li:nth-child(4) a{animation-delay:-7.2s}
+.nav-links li:nth-child(5) a{animation-delay:-9.6s}
+@keyframes navColorWave{0%,100%{color:#5a7a94}8%{color:#a5f3fc}16%{color:#c4b5fd}24%{color:#6ee7b7}32%{color:#7dd3fc}40%{color:#a78bfa}48%{color:#5a7a94}56%{color:#a5f3fc}64%{color:#c4b5fd}72%{color:#6ee7b7}80%{color:#7dd3fc}88%{color:#a78bfa}}
 .hire-btn{background:linear-gradient(135deg,var(--blue),var(--blue2));color:#fff;border:none;padding:.4rem 1.1rem;border-radius:20px;font-size:.78rem;font-weight:600;cursor:pointer;text-decoration:none;transition:all .2s;box-shadow:0 0 16px rgba(23,85,167,.4)}
 .hire-btn:hover{transform:translateY(-2px);box-shadow:0 4px 20px rgba(23,85,167,.6)}
 
