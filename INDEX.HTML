@@ -63,8 +63,35 @@ nav{position:fixed;top:0;left:0;right:0;z-index:999;padding:.9rem 2rem;display:f
 /* HERO */
 #hero{min-height:100vh;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;padding:6rem 2rem 4rem;background:transparent}
 .hero-bg{position:absolute;inset:0}
-.grid-ov{position:absolute;inset:0;background-image:linear-gradient(rgba(0,229,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(0,229,255,.04) 1px,transparent 1px);background-size:52px 52px;animation:gp 8s ease-in-out infinite}
-@keyframes gp{0%,100%{opacity:.3}50%{opacity:.7}}
+
+/* aurora replaced by space canvas */50%{transform:translate(40px,-50px) scale(1.15)}}
+
+/* GRID */
+.grid-ov{position:absolute;inset:0;background-image:linear-gradient(rgba(0,229,255,.055) 1px,transparent 1px),linear-gradient(90deg,rgba(0,229,255,.055) 1px,transparent 1px);background-size:64px 64px;animation:gp 8s ease-in-out infinite;z-index:1;will-change:opacity}
+@keyframes gp{0%,100%{opacity:.2}50%{opacity:.55}}
+
+33%{transform:translate(50px,60px) scale(1.1)}66%{transform:translate(-40px,-30px) scale(.97)}}
+
+/* ══ SHOOTING STARS ══ */
+.sst-wrap{position:absolute;inset:0;pointer-events:none;z-index:2;overflow:hidden}
+.sst{position:absolute;height:1px;width:0;border-radius:1px;animation:sstA linear infinite;will-change:transform,width,opacity}
+@keyframes sstA{0%{width:0;opacity:0;transform:translateX(-400px) translateY(0) rotate(-35deg)}5%{opacity:1;width:120px}25%{opacity:.3;width:200px}40%{opacity:0;width:60px}100%{opacity:0;width:0;transform:translateX(200vw) translateY(80vh) rotate(-35deg)}}
+
+/* ══ HERO SWEEP LIGHT ══ */
+.hero-sweep{position:absolute;inset:0;pointer-events:none;z-index:1;overflow:hidden}
+.hero-sweep::before{content:'';position:absolute;width:200%;height:200%;top:-50%;left:-50%;background:conic-gradient(from 0deg at 50% 50%,transparent 0deg,rgba(0,229,255,.025) 8deg,rgba(124,58,237,.02) 16deg,transparent 24deg,transparent 360deg);animation:sweepRot 18s linear infinite;will-change:transform}
+@keyframes sweepRot{to{transform:rotate(360deg)}}
+
+
+/* PARTICLE CANVAS */
+#heroCanvas{position:absolute;inset:0;width:100%;height:100%;z-index:2;pointer-events:none;will-change:transform}
+
+/* SCANLINE OVERLAY */
+.hero-scan{position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,229,255,.008) 2px,rgba(0,229,255,.008) 3px);pointer-events:none;z-index:3}
+
+/* VIGNETTE */
+.hero-vign{position:absolute;inset:0;background:radial-gradient(ellipse 80% 80% at 50% 50%,transparent 40%,rgba(3,7,15,.7) 100%);pointer-events:none;z-index:3}
+
 .bg-orb{position:absolute;border-radius:50%;filter:blur(90px);animation:oa ease-in-out infinite}
 @keyframes oa{0%,100%{transform:scale(1) translateY(0)}50%{transform:scale(1.1) translateY(-20px)}}
 .bo1{width:500px;height:500px;background:rgba(23,85,167,.3);top:-200px;left:-100px;animation-duration:10s}
