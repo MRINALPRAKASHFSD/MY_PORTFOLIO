@@ -190,10 +190,11 @@ section{padding:5rem 2rem}
 .tool-pill:hover{border-color:var(--cyan);color:var(--cyan);background:rgba(0,229,255,.06);transform:translateY(-2px)}
 
 /* ========== SKILLS — SAME LAYOUT AS EXPERIENCE ========== */
-#skills{background:var(--bg);position:relative;overflow:hidden}
-.sk-orb{position:absolute;border-radius:50%;filter:blur(110px);animation:oa ease-in-out infinite;pointer-events:none}
-.sko1{width:480px;height:480px;background:rgba(23,85,167,.2);top:-150px;right:-100px;animation-duration:13s}
-.sko2{width:340px;height:340px;background:rgba(124,58,237,.16);bottom:-100px;left:-80px;animation-duration:17s;animation-delay:-7s}
+#skills{background:rgba(3,7,15,.75);position:relative;overflow:hidden}
+#skills::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 1000px 500px at 50% 0%,rgba(124,58,237,.07) 0%,transparent 60%),radial-gradient(ellipse 600px 400px at 80% 100%,rgba(0,229,255,.05) 0%,transparent 55%);pointer-events:none;z-index:0}
+.sk-orb{position:absolute;border-radius:50%;filter:blur(80px);animation:oa ease-in-out infinite;pointer-events:none;will-change:transform;contain:layout style}
+.sko1{width:480px;height:480px;background:rgba(23,85,167,.15);top:-150px;right:-100px;animation-duration:20s;will-change:transform}
+.sko2{width:340px;height:340px;background:rgba(124,58,237,.12);bottom:-100px;left:-80px;animation-duration:25s;animation-delay:-7s;will-change:transform}
 .sk-stars{position:absolute;inset:0;pointer-events:none}
 .sk-st{position:absolute;border-radius:50%;animation:twk ease-in-out infinite}
 @keyframes twk{0%,100%{opacity:.07}50%{opacity:.5}}
