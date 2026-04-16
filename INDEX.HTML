@@ -131,7 +131,8 @@ section{padding:5rem 2rem}
 .sec-label{font-family:'Share Tech Mono',monospace;font-size:.72rem;background:linear-gradient(90deg,#00e5ff,#a855f7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:.18em;text-transform:uppercase;margin-bottom:.75rem;display:flex;align-items:center;gap:.5rem;text-align:left}
 .sec-label::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,rgba(0,229,255,.35),rgba(168,85,247,.2),transparent)}
 .sec-title{font-family:'Syne',sans-serif;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:800;line-height:1.1;margin-bottom:.75rem;text-align:left}
-.sec-title span{background:linear-gradient(135deg,var(--cyan),var(--blue2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.sec-title span{background:linear-gradient(135deg,#00e5ff 0%,#2a7fff 40%,#a855f7 75%,#00ff88 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:secTitleRGB 5s ease-in-out infinite;background-size:200% auto}
+@keyframes secTitleRGB{0%,100%{background-position:0% center}50%{background-position:100% center}}
 .sec-desc{color:var(--muted);line-height:1.7;margin-bottom:3rem;font-size:.92rem;text-align:justify;max-width:100%}
 .divider{height:1px;background:linear-gradient(90deg,transparent,rgba(0,229,255,.15),transparent);margin:0 0 3rem}
 .reveal{opacity:0;transform:translateY(28px);transition:all .6s ease}
