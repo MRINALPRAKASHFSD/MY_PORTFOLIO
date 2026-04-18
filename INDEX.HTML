@@ -827,24 +827,24 @@ const ICO={
 
 /* ====== SKILLS DATA ====== */
 const skillPairs=[
-  /* Frontend Web Dev */
-  {L:{icon:'html',ac:'#E44D26',cat:'Web Standard',name:'Frontend Core',lvl:'Expert · 95%',tags:['HTML5','CSS3','JavaScript','Bootstrap','Tailwind CSS'],use:'Building pixel-perfect, highly responsive web interfaces with modern styling frameworks.',bar:95},
-   R:{icon:'react',ac:'#61DAFB',cat:'Frameworks',name:'Modern React Ecosystem',lvl:'Advanced · 90%',tags:['React.js','AngularJS','Vite','Vercel'],use:'Developing dynamic Single Page Applications (SPAs) with optimized build pipelines and fast edge deployments.',bar:90}},
-  /* AI/Data Science */
-  {L:{icon:'python',ac:'#3776AB',cat:'Data Science',name:'Data Sci & Core ML',lvl:'Expert · 92%',tags:['Python','NumPy','Pandas','Matplotlib','scikit-learn'],use:'Extensive usage for data wrangling, scientific computing, visualization, and building robust ML pipelines.',bar:92},
-   R:{icon:'tensorflow',ac:'#FF6F00',cat:'AI / ML',name:'Advanced Analytics & AI',lvl:'Advanced · 88%',tags:['NLP','Chatbot Dev','Time Series','Regression','Statistical Analysis'],use:'Creating predictive models, conversational agents, and data forecasting using advanced statistical concepts.',bar:88}},
-  /* Core Engineering & Systems */
-  {L:{icon:'java',ac:'#E76F00',cat:'Core OOP',name:'Software Engineering',lvl:'Advanced · 85%',tags:['Java','C++','Software Development','OOP'],use:'Strong grasp on algorithmic thinking, system-level programming and building scalable robust applications.',bar:85},
-   R:{icon:'postgresql',ac:'#336791',cat:'Database',name:'Database & SQL',lvl:'Advanced · 87%',tags:['SQL','Integrity','Performance','Relational Data'],use:'Designing schemas, writing high-performance SQL queries for complex enterprise-level projects.',bar:87}},
-  /* Cloud & Version Control */
-  {L:{icon:'aws',ac:'#FF9900',cat:'Cloud',name:'Cloud Computing',lvl:'Proficient · 80%',tags:['Cloud Computing','Cloud Applications','AWS','Scaling'],use:'Active involvement in Cloud Computing architectures, designing applications and deploying scalable solutions.',bar:80},
-   R:{icon:'git',ac:'#F34F29',cat:'Version & QA',name:'Source Code Management',lvl:'Expert · 95%',tags:['Git','GitHub','Git Bash','Collaboration'],use:'Seamless source version control, repository management, merging, branching, and team-based pull request workflows.',bar:95}},
-  /* Security & Leadership */
-  {L:{icon:'node',ac:'#83CD29',cat:'Security / IT',name:'Networks & Cyber Security',lvl:'Intermediate · 75%',tags:['Network Security','Cyber Security','IT Fundamentals'],use:'Focus on securing applications against vulnerabilities, applying robust network protocols, and foundational IT principles.',bar:75},
-   R:{icon:'figma',ac:'#A259FF',cat:'Team Leadership',name:'Leadership & Coordination',lvl:'Expert · 98%',tags:['Leadership','Cross-functional','Team Management','Teamwork','Student Council'],use:'Leading teams collaboratively in multiple organizations enforcing alignment, positive culture, and high productivity.',bar:98}},
-  /* Management & Soft Skills */
-  {L:{icon:'canva',ac:'#00e5ff',cat:'Operations',name:'Strategy & Management',lvl:'Expert · 92%',tags:['Project Management','Logistics Management','Market Research','Team Coordination'],use:'Taking projects from conception to completion via well-managed timelines, market strategies, and logistical mastery.',bar:92},
-   R:{icon:'typescript',ac:'#3178C6',cat:'Interpersonal',name:'Soft Skills & Comm.',lvl:'Expert · 95%',tags:['Communication','English','Client Interactions'],use:'Effective english communication bridging the gap between technical complexity and transparent business strategy.',bar:95}}
+  /* === FRONTEND === */
+  {L:{icon:'html',ac:'#E44D26',cat:'Web Core',name:'Frontend Foundation',lvl:'Expert · 95%',tags:['HTML5','CSS3','JavaScript ES6+','Bootstrap','Tailwind CSS'],use:'Building pixel-perfect, responsive interfaces with semantic HTML5, modern CSS, and utility-first Tailwind for fast, production-ready frontends.',bar:95},
+   R:{icon:'react',ac:'#61DAFB',cat:'React / Next.js',name:'React 18 & Next.js 14',lvl:'Advanced · 90%',tags:['React.js 18','Next.js 14','Vite','Chart.js','Leaflet.js'],use:'SPAs with React 18 hooks and Context, full-stack apps with Next.js 14 App Router, data-viz with Chart.js and geospatial UIs with Leaflet.js.',bar:90}},
+  /* === BACKEND === */
+  {L:{icon:'node',ac:'#83CD29',cat:'Backend',name:'Node.js & Express',lvl:'Advanced · 88%',tags:['Node.js','Express.js','REST APIs','Microservices','Mongoose','System Design'],use:'Production-grade RESTful APIs and microservice architectures with proper middleware chains, error handling, and Mongoose ODM for MongoDB.',bar:88},
+   R:{icon:'docker',ac:'#2396ED',cat:'DevOps / CI-CD',name:'DevOps & Deployment',lvl:'Proficient · 80%',tags:['Docker','GitHub Actions','Vercel','Render','CI/CD','AgileScrum'],use:'Containerising apps with Docker, automating deployments via GitHub Actions CI/CD pipelines, deploying to Vercel and Render, Agile sprint management.',bar:80}},
+  /* === DATABASES === */
+  {L:{icon:'mongodb',ac:'#599636',cat:'NoSQL / Real-time',name:'MongoDB & Firebase',lvl:'Advanced · 88%',tags:['MongoDB Atlas','Firebase','Supabase','Real-time DB','NoSQL'],use:'Document-based schema design in MongoDB Atlas, real-time sync with Firebase, and Supabase for PostgreSQL + Auth + Storage combined.',bar:88},
+   R:{icon:'postgresql',ac:'#336791',cat:'SQL / Relational',name:'SQL & Relational DBs',lvl:'Advanced · 85%',tags:['PostgreSQL','SQLite3','SQL Triggers','RBAC','System Design'],use:'Relational schema design with 3NF normalisation, SQL triggers, and enterprise RBAC (Admin/Analyst) enforced at the database layer.',bar:85}},
+  /* === AUTH & SECURITY === */
+  {L:{icon:'git',ac:'#F34F29',cat:'Auth & Security',name:'Auth, JWT & RBAC',lvl:'Expert · 90%',tags:['JWT','Firebase Auth','RBAC','APIsec','CVSS','Socket.io'],use:'Multi-layer auth with Firebase + JWT access/refresh tokens securing 4 role tiers, real-time bidirectional sync via Socket.io, APIsec CVSS scanning.',bar:90},
+   R:{icon:'typescript',ac:'#3178C6',cat:'Languages',name:'TypeScript & Core Languages',lvl:'Advanced · 83%',tags:['TypeScript','Java','C++','OOP','Algorithms'],use:'Type-safe TS development reducing runtime errors; strong OOP principles with Java and C++ for system-level programming and algorithm design.',bar:83}},
+  /* === AI / ML === */
+  {L:{icon:'python',ac:'#3776AB',cat:'Data Science',name:'Python & ML Pipeline',lvl:'Expert · 92%',tags:['Python','NumPy','Pandas','Matplotlib','scikit-learn'],use:'End-to-end data science: wrangling with Pandas, numerical ops with NumPy, visualization with Matplotlib, and model building with scikit-learn.',bar:92},
+   R:{icon:'tensorflow',ac:'#FF6F00',cat:'AI / ML',name:'ML Models & Analytics',lvl:'Advanced · 85%',tags:['NLP','Time Series','LSTM','MLP','Regression','Predictive Modelling'],use:'Building LSTM time-series forecasting models, MLP classifiers, NLP pipelines, and predictive analytics engines for production applications.',bar:85}},
+  /* === TOOLS & LEADERSHIP === */
+  {L:{icon:'figma',ac:'#A259FF',cat:'Tools',name:'Developer Toolchain',lvl:'Expert · 93%',tags:['Git','GitHub','VS Code','Jupyter Notebook','Figma','Vercel'],use:'Complete developer workflow — version control with Git/GitHub, project design in Figma, ML experimentation in Jupyter, deployment on Vercel.',bar:93},
+   R:{icon:'canva',ac:'#00e5ff',cat:'Leadership',name:'Leadership & Agile',lvl:'Expert · 96%',tags:['Team Lead','Agile','Scrum','HACK KRMU 5.0','50+ Devs Mentored','Campus Ambassador'],use:'Tech Team Lead for HACK KRMU 5.0 (54hr, ₹5L prize), led 50+ volunteers; Campus Ambassador growing dev community 40%+ across 3 departments.',bar:96}}
 ];
 
 const skPairsEl=document.getElementById('skPairs');
