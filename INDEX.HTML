@@ -1026,7 +1026,7 @@ function onScroll(){
   document.querySelectorAll('.exp-pair-reveal,.sk-pair-reveal').forEach(rw=>{if(rw.getBoundingClientRect().top<vh*.9)rw.classList.add('show');});
   document.querySelectorAll('.reveal').forEach(el=>{if(el.getBoundingClientRect().top<vh*.88)el.classList.add('visible');});
 }
-window.addEventListener('scroll',onScroll,{passive:true});
+let _st=0;window.addEventListener('scroll',()=>{if(Date.now()-_st>16){_st=Date.now();onScroll();}},{passive:true});
 setTimeout(onScroll,200);
 
 /* TYPING */
