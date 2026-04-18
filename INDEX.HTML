@@ -1044,6 +1044,579 @@ type();
 function drawHex(id){const c=document.getElementById(id);if(!c)return;const W=c.offsetWidth||800,H=c.offsetHeight||1600;c.width=W;c.height=H;const ctx=c.getContext('2d'),s=36,dx=s*1.732,dy=s*1.5;ctx.strokeStyle='rgba(0,229,255,1)';ctx.lineWidth=.7;for(let row=0;row<Math.ceil(H/dy)+2;row++){for(let col=0;col<Math.ceil(W/dx)+2;col++){const ox=col%2===0?0:dx/2,cx=col*dx+ox,cy=row*dy;ctx.beginPath();for(let a=0;a<6;a++){const ang=(Math.PI/3)*a-Math.PI/6;ctx.lineTo(cx+s*Math.cos(ang),cy+s*Math.sin(ang));}ctx.closePath();ctx.stroke();}}}
 setTimeout(()=>{drawHex('expHex');drawHex('skHex');},200);
 window.addEventListener('resize',()=>{drawHex('expHex');drawHex('skHex');});
+
+/* ========== HERO PARTICLE NETWORK ========== */
+(function(){
+  const cv=document.getElementById('heroCanvas');
+  if(!cv)return;
+  const ctx=cv.getContext('2d');
+  const COLS=['rgba(0,229,255,','rgba(42,127,255,','rgba(124,58,237,','rgba(165,236,255,'];
+  let W,H,pts,raf;
+  const mouse={x:-9999,y:-9999};
+  function resize(){
+    const hero=document.getElementById('hero');
+    W=cv.width=hero.offsetWidth;H=cv.height=hero.offsetHeight;
+    buildPts();
+  }
+  function buildPts(){
+    pts=[];
+    const N=Math.min(55,Math.floor(W*H/14000));
+    for(let i=0;i<N;i++){
+      const c=COLS[Math.floor(Math.random()*COLS.length)];
+      pts.push({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.35,vy:(Math.random()-.5)*.35,r:Math.random()*2+.8,c,a:Math.random()*.5+.35,ph:Math.random()*Math.PI*2});
+    }
+  }
+  function frame(t){
+    ctx.clearRect(0,0,W,H);
+    const LD=Math.min(W,H)*.13;
+    for(let i=0;i<pts.length;i++){
+      const p=pts[i];
+      p.x+=p.vx;p.y+=p.vy;
+      if(p.x<-10)p.x=W+10;if(p.x>W+10)p.x=-10;
+      if(p.y<-10)p.y=H+10;if(p.y>H+10)p.y=-10;
+      const mdx=p.x-mouse.x,mdy=p.y-mouse.y,md=Math.hypot(mdx,mdy);
+      if(md<130&&md>0){const f=(130-md)/130*.06;p.vx+=(mdx/md)*f;p.vy+=(mdy/md)*f;}
+      const spd=Math.hypot(p.vx,p.vy);if(spd>.9){p.vx*=.93;p.vy*=.93;}
+      for(let j=i+1;j<pts.length;j++){
+        const q=pts[j];
+        const d=Math.hypot(p.x-q.x,p.y-q.y);
+        if(d<LD){
+          const al=(1-d/LD)*.35;
+          ctx.beginPath();ctx.strokeStyle=p.c+al+')';ctx.lineWidth=.7;ctx.moveTo(p.x,p.y);ctx.lineTo(q.x,q.y);ctx.stroke();
+        }
+      }
+      const pa=p.a*(.7+.3*Math.sin(t*.0008+p.ph));
+      ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle=p.c+pa+')';ctx.fill();
+      /* glow removed for perf */
+    }
+    raf=requestAnimationFrame(frame); // 60fps kept, but lighter work
+  }
+  const hero=document.getElementById('hero');
+  hero.addEventListener('mousemove',e=>{const r=cv.getBoundingClientRect();mouse.x=e.clientX-r.left;mouse.y=e.clientY-r.top;});
+  hero.addEventListener('mouseleave',()=>{mouse.x=-9999;mouse.y=-9999;});
+  window.addEventListener('resize',resize);
+  resize();raf=requestAnimationFrame(frame);
+})();
+
+/* SPINE CURSOR TRACKING */
+(function(){
+  const sec = document.getElementById('skills');
+  const spineWrap = sec ? sec.querySelector('.sk-spine-wrap') : null;
+  const cursor = document.getElementById('skSpineCursor');
+  if(!spineWrap || !cursor) return;
+  sec.addEventListener('mousemove', function(e){
+    const spRect = spineWrap.getBoundingClientRect();
+    const relY = e.clientY - spRect.top;
+    const pct = Math.max(0, Math.min(1, relY / spRect.height));
+    cursor.style.top = (pct * 100) + '%';
+    cursor.style.opacity = '1';
+  }, {passive:true});
+  sec.addEventListener('mouseleave', function(){
+    cursor.style.opacity = '0';
+  });
+})();
+
+/* ══ SHOOTING STARS ══ */
+(function(){
+  const wrap = document.getElementById('sstWrap');
+  if(!wrap) return;
+  const COLORS = ['rgba(165,243,252,0.9)','rgba(196,181,253,0.9)','rgba(110,231,183,0.85)','rgba(253,164,175,0.85)','rgba(255,255,255,0.9)'];
+  const count = 8;
+  for(let i=0;i<count;i++){
+    const el = document.createElement('div');
+    el.className = 'sst';
+    const col = COLORS[i % COLORS.length];
+    const dur = 5 + Math.random() * 8;
+    const delay = -(Math.random() * 18);
+    const top = Math.random() * 70;
+    const left = Math.random() * 60;
+    el.style.cssText = `top:${top}%;left:${left}%;background:linear-gradient(90deg,transparent,${col},transparent);animation-duration:${dur}s;animation-delay:${delay}s;box-shadow:0 0 4px ${col}`;
+    wrap.appendChild(el);
+  }
+})();
+
+/* ════════════════════════════════════════════════════════════════════
+   SPACE CANVAS — Galaxy Background Engine
+   Star field · Nebulae · Milky Way · Shooting Stars · Twinkle
+   ════════════════════════════════════════════════════════════════════ */
+(function(){
+  const cv = document.getElementById('spaceCanvas');
+  if(!cv) return;
+  const ctx = cv.getContext('2d');
+  let W, H, stars = [], nebulas = [], shooters = [];
+  let nextShot = 0;
+  const STAR_COLORS = ['#ffffff','#ffffff','#ffffff','#e0f2fe','#c7d2fe','#fde68a','#a5f3fc','#c4b5fd'];
+
+  function resize(){
+    W = cv.width = window.innerWidth;
+    H = cv.height = window.innerHeight;
+    buildScene();
+  }
+
+  function buildScene(){
+    stars = [];
+    /* ── Far background stars (700) ── */
+    for(let i=0;i<700;i++) stars.push({
+      x:Math.random()*W, y:Math.random()*H,
+      r:Math.random()*.55+.1,
+      a:Math.random()*.28+.07,
+      da:Math.random()*.15+.04,
+      sp:.0008+Math.random()*.0018,
+      ph:Math.random()*Math.PI*2,
+      col:'#ffffff', glow:false
+    });
+    /* ── Mid stars with color tints (280) ── */
+    for(let i=0;i<280;i++) stars.push({
+      x:Math.random()*W, y:Math.random()*H,
+      r:Math.random()*.85+.35,
+      a:Math.random()*.38+.22,
+      da:Math.random()*.22+.08,
+      sp:.0012+Math.random()*.0025,
+      ph:Math.random()*Math.PI*2,
+      col:STAR_COLORS[Math.floor(Math.random()*STAR_COLORS.length)], glow:false
+    });
+    /* ── Bright glow stars (110) ── */
+    for(let i=0;i<110;i++) stars.push({
+      x:Math.random()*W, y:Math.random()*H,
+      r:Math.random()*1.3+.7,
+      a:Math.random()*.3+.65,
+      da:Math.random()*.28+.12,
+      sp:.002+Math.random()*.004,
+      ph:Math.random()*Math.PI*2,
+      col:STAR_COLORS[Math.floor(Math.random()*STAR_COLORS.length)], glow:true
+    });
+    /* ── Milky Way band — diagonal strip of dense micro-stars (350) ── */
+    const mwAngle = Math.PI/5.5;
+    const mwCX = W*.5, mwCY = H*.45;
+    const mwBand = Math.min(W,H)*.3;
+    let mwAdded = 0;
+    for(let attempt=0;attempt<900&&mwAdded<350;attempt++){
+      const along = (Math.random()-.5)*W*1.5;
+      const across = (Math.random()-.5)*mwBand;
+      const x = mwCX + along*Math.cos(mwAngle) - across*Math.sin(mwAngle);
+      const y = mwCY + along*Math.sin(mwAngle) + across*Math.cos(mwAngle);
+      if(x<0||x>W||y<0||y>H) continue;
+      stars.push({
+        x, y,
+        r:Math.random()*.38+.08,
+        a:Math.random()*.18+.04,
+        da:Math.random()*.08+.02,
+        sp:.0004+Math.random()*.0008,
+        ph:Math.random()*Math.PI*2,
+        col:'#dbeafe', glow:false
+      });
+      mwAdded++;
+    }
+    /* ── Nebula blobs ── */
+    nebulas = [
+      {x:W*.1, y:H*.15, r:Math.min(W,H)*.35, c:[124,58,237],  a:.11, dx:.008, dy:.005, ox:0, oy:0},
+      {x:W*.88,y:H*.08, r:Math.min(W,H)*.28, c:[0,180,255],   a:.09, dx:-.006,dy:.007, ox:0, oy:0},
+      {x:W*.55,y:H*.75, r:Math.min(W,H)*.3,  c:[0,210,140],   a:.08, dx:.007, dy:-.005,ox:0, oy:0},
+      {x:W*.2, y:H*.88, r:Math.min(W,H)*.24, c:[200,70,180],  a:.085,dx:-.005,dy:-.006,ox:0, oy:0},
+      {x:W*.78,y:H*.42, r:Math.min(W,H)*.22, c:[255,160,50],  a:.065,dx:.006, dy:.008, ox:0, oy:0},
+      {x:W*.38,y:H*.32, r:Math.min(W,H)*.2,  c:[60,120,255],  a:.07, dx:-.007,dy:.005, ox:0, oy:0},
+      {x:W*.65,y:H*.6,  r:Math.min(W,H)*.18, c:[0,255,150],   a:.055,dx:.005, dy:-.007,ox:0, oy:0},
+    ];
+  }
+
+  function drawNebulas(){
+    for(const n of nebulas){
+      // Slowly drift
+      n.ox += n.dx; n.oy += n.dy;
+      if(Math.abs(n.ox)>55){n.dx*=-1;} if(Math.abs(n.oy)>45){n.dy*=-1;}
+      const nx = n.x + n.ox, ny = n.y + n.oy;
+      const grd = ctx.createRadialGradient(nx,ny,0,nx,ny,n.r);
+      const [r,g,b] = n.c;
+      grd.addColorStop(0,   `rgba(${r},${g},${b},${n.a})`);
+      grd.addColorStop(.4,  `rgba(${r},${g},${b},${(n.a*.6).toFixed(3)})`);
+      grd.addColorStop(.75, `rgba(${r},${g},${b},${(n.a*.2).toFixed(3)})`);
+      grd.addColorStop(1,   `rgba(${r},${g},${b},0)`);
+      ctx.beginPath();
+      ctx.arc(nx,ny,n.r,0,Math.PI*2);
+      ctx.fillStyle = grd;
+      ctx.fill();
+    }
+  }
+
+  function drawStars(t){
+    /* Plain stars first (no shadow — fast) */
+    for(const s of stars){
+      if(s.glow) continue;
+      const alpha = Math.max(.02, Math.min(1, s.a + Math.sin(t*s.sp+s.ph)*s.da));
+      ctx.globalAlpha = alpha;
+      ctx.beginPath();
+      ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+      ctx.fillStyle = s.col;
+      ctx.fill();
+    }
+    /* Glow stars with shadow (batched) */
+    ctx.save();
+    for(const s of stars){
+      if(!s.glow) continue;
+      const alpha = Math.max(.1, Math.min(1, s.a + Math.sin(t*s.sp+s.ph)*s.da));
+      ctx.globalAlpha = alpha;
+      ctx.shadowColor = s.col;
+      ctx.shadowBlur = s.r * 10;
+      ctx.beginPath();
+      ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+      ctx.fillStyle = s.col;
+      ctx.fill();
+    }
+    ctx.restore();
+    ctx.globalAlpha = 1;
+  }
+
+  function updateShooters(t){
+    /* Spawn new one */
+    if(t >= nextShot){
+      nextShot = t + 1800 + Math.random()*3500;
+      const COLS = [[165,243,252],[196,181,253],[255,255,255],[110,231,183],[253,220,170]];
+      const col = COLS[Math.floor(Math.random()*COLS.length)];
+      const speed = 7 + Math.random()*6;
+      const ang = -(25+Math.random()*25)*Math.PI/180;
+      shooters.push({
+        x: W*(0.05+Math.random()*.85),
+        y: H*(Math.random()*.45),
+        vx: Math.cos(ang)*speed,
+        vy: -Math.sin(ang)*speed + speed*.45,
+        len: 140+Math.random()*130,
+        alpha:1, col, tail:[]
+      });
+    }
+    /* Draw and update */
+    shooters = shooters.filter(s=>s.alpha>0.015);
+    for(const s of shooters){
+      const spd = Math.hypot(s.vx,s.vy);
+      const nx = s.vx/spd, ny = s.vy/spd;
+      const tx = s.x - nx*s.len, ty = s.y - ny*s.len;
+      const grd = ctx.createLinearGradient(tx,ty,s.x,s.y);
+      const [r,g,b] = s.col;
+      grd.addColorStop(0,  `rgba(${r},${g},${b},0)`);
+      grd.addColorStop(.6, `rgba(${r},${g},${b},${(s.alpha*.4).toFixed(3)})`);
+      grd.addColorStop(1,  `rgba(${r},${g},${b},${s.alpha.toFixed(3)})`);
+      ctx.beginPath();
+      ctx.moveTo(tx,ty);
+      ctx.lineTo(s.x,s.y);
+      ctx.strokeStyle = grd;
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+      /* bright tip */
+      ctx.save();
+      ctx.shadowColor = `rgba(${r},${g},${b},1)`;
+      ctx.shadowBlur = 8;
+      ctx.beginPath();
+      ctx.arc(s.x,s.y,2,0,Math.PI*2);
+      ctx.fillStyle = `rgba(${r},${g},${b},${s.alpha})`;
+      ctx.fill();
+      ctx.restore();
+      s.x+=s.vx; s.y+=s.vy; s.alpha-=0.016;
+    }
+  }
+
+  function frame(t){
+    ctx.clearRect(0,0,W,H);
+    drawNebulas();
+    drawStars(t);
+    updateShooters(t);
+    requestAnimationFrame(frame);
+  }
+
+  let resizeTimer;
+  window.addEventListener('resize',()=>{
+    clearTimeout(resizeTimer);
+    resizeTimer=setTimeout(resize,200);
+  });
+  resize();
+  requestAnimationFrame(frame);
+})();
+
+/* PROJECTS — galactic decorations */
+(function(){
+  /* stars */
+  ['pjStars'].forEach(id=>{
+    const el = document.getElementById(id);
+    if(!el) return;
+    for(let i=0;i<60;i++){
+      const s = document.createElement('div');
+      s.className = 'pj-st';
+      const sz = Math.random()<.1 ? 2 : 1;
+      const cols = ['#e0f2fe','#c7d2fe','#a5f3fc','#ffffff','#fde68a'];
+      s.style.cssText = `width:${sz}px;height:${sz}px;left:${Math.random()*100}%;top:${Math.random()*100}%;background:${cols[Math.floor(Math.random()*cols.length)]};animation-duration:${1.8+Math.random()*4}s;animation-delay:${Math.random()*5}s`;
+      el.appendChild(s);
+    }
+  });
+  /* hex canvas */
+  ['pjHex'].forEach(id=>{
+    const c2 = document.getElementById(id);
+    if(!c2) return;
+    const parent = c2.parentElement;
+    const W2 = parent.offsetWidth||900, H2 = parent.offsetHeight||700;
+    c2.width=W2; c2.height=H2;
+    const ctx2=c2.getContext('2d'), s2=40, dx2=s2*1.732, dy2=s2*1.5;
+    ctx2.strokeStyle='rgba(0,229,255,1)'; ctx2.lineWidth=.6;
+    for(let row=0;row<Math.ceil(H2/dy2)+2;row++){
+      for(let col=0;col<Math.ceil(W2/dx2)+2;col++){
+        const ox=col%2===0?0:dx2/2,cx2=col*dx2+ox,cy2=row*dy2;
+        ctx2.beginPath();
+        for(let a=0;a<6;a++){const ang=(Math.PI/3)*a-Math.PI/6;ctx2.lineTo(cx2+s2*Math.cos(ang),cy2+s2*Math.sin(ang));}
+        ctx2.closePath(); ctx2.stroke();
+      }
+    }
+  });
+})();
+
+/* ════════════════════════════════════════════════════════════════
+   COSMIC FALL — Global falling stars & comets (entire website)
+   ════════════════════════════════════════════════════════════════ */
+(function(){
+  /* Container already created in HTML, create dynamically */
+  let wrap = document.getElementById('cosmicFall');
+  if(!wrap){ wrap = document.createElement('div'); wrap.id='cosmicFall'; document.body.insertBefore(wrap, document.body.children[1]); }
+
+  const COLS = ['#ffffff','#ffffff','#a5f3fc','#c4b5fd','#fde68a','#6ee7b7','#fda4af','#e0f2fe','#ffffff'];
+
+  /* ── FALLING STARS (85 — more than before) ── */
+  for(let i=0;i<85;i++){
+    const el = document.createElement('div');
+    el.className = 'cfs';
+    const col  = COLS[i % COLS.length];
+    /* mostly tiny, occasionally bigger */
+    const sz   = Math.random() < 0.08 ? 3 : (Math.random() < 0.25 ? 2 : 1.2);
+    /* large delay range so they feel completely non-patterned */
+    const dur  = 8 + Math.random() * 22;
+    const dly  = -(Math.random() * 60);
+    /* spread randomly across full width */
+    const left = Math.random() * 100;
+    /* slight wobble angle — mostly straight, tiny diagonal */
+    const ang  = (-5 + Math.random() * 10) + 'deg';
+    const peak = (.25 + Math.random() * .65).toFixed(2);
+    el.style.cssText = [
+      `width:${sz}px`,`height:${sz}px`,
+      `left:${left}%`,`top:-${sz+4}px`,
+      `background:${col}`,
+      `box-shadow:0 0 ${sz*4}px ${col},0 0 ${sz*8}px ${col}30`,
+      `--ang:${ang}`,`--peak:${peak}`,
+      `animation-duration:${dur}s`,`animation-delay:${dly}s`
+    ].join(';');
+    wrap.appendChild(el);
+  }
+
+  /* ── COMETS — rare (7), fully random, non-patterned ── */
+  const cometPositions = [3,14,28,41,57,73,89]; /* fixed spread so they cover the width evenly but order randomised */
+  const shuffled = cometPositions.sort(()=>Math.random()-.5);
+  for(let i=0;i<7;i++){
+    const el  = document.createElement('div');
+    el.className = 'cfc';
+    const col  = COLS[Math.floor(Math.random()*COLS.length)];
+    /* varied tail lengths */
+    const len  = 45 + Math.random() * 120;
+    const wide = Math.random() < 0.3 ? 2 : 1;
+    /* very large duration spread → they appear unpredictably */
+    const dur  = 8 + Math.random() * 18;
+    /* huge delay range — 0 to 80s — so each comet's cycle is truly independent */
+    const dly  = -(Math.random() * 80);
+    const left = shuffled[i] + (Math.random()*8 - 4); /* slight jitter on position */
+    const ang  = (-18 - Math.random() * 22) + 'deg';
+    el.style.cssText = [
+      `width:${wide}px`,`height:${len}px`,
+      `left:${left}%`,`top:-${len+40}px`,
+      `background:linear-gradient(to bottom,transparent 0%,${col}50 45%,${col} 100%)`,
+      `border-radius:${wide}px`,
+      `box-shadow:0 0 ${wide*4}px ${col}60`,
+      `--ang:${ang}`,
+      `animation-duration:${dur}s`,`animation-delay:${dly}s`
+    ].join(';');
+    /* glowing tip */
+    const head = document.createElement('div');
+    head.style.cssText = `position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:${wide+2}px;height:${wide+2}px;border-radius:50%;background:${col};box-shadow:0 0 10px ${col},0 0 20px ${col}`;
+    el.appendChild(head);
+    wrap.appendChild(el);
+  }
+
+  /* ── EXPERIENCE SPINE CURSOR TRACKING (fixed) ── */
+  const expCursor   = document.getElementById('expSpineCursor');
+  const expSpineWrap = document.querySelector('.exp-spine-wrap');
+  if(expCursor && expSpineWrap){
+    const expSection = document.getElementById('experience');
+    function updateExpCursor(ev){
+      if(!expSection) return;
+      const secRect  = expSection.getBoundingClientRect();
+      const spRect   = expSpineWrap.getBoundingClientRect();
+      /* active when cursor is horizontally near the spine (±60px) and within the section vertically */
+      const nearSpine = Math.abs(ev.clientX - (spRect.left + spRect.width/2)) < 160;
+      if(ev.clientY >= secRect.top && ev.clientY <= secRect.bottom && nearSpine){
+        expCursor.style.opacity = '1';
+        /* position relative to spine wrap */
+        const relY = Math.max(0, Math.min(spRect.height, ev.clientY - spRect.top));
+        expCursor.style.top = relY + 'px';
+        const pct = relY / Math.max(1, spRect.height);
+        /* cyan → purple → amber colour shift along spine */
+        const r = Math.round(pct * 255);
+        const g = Math.round(229 * (1 - pct*.55));
+        const b = Math.round(255 * (1 - pct*.5));
+        const gCol = `rgb(${r},${g},${b})`;
+        expCursor.style.background  = gCol;
+        expCursor.style.boxShadow   = `0 0 16px ${gCol},0 0 32px ${gCol}`;
+      } else {
+        expCursor.style.opacity = '0';
+      }
+    }
+    document.addEventListener('mousemove', updateExpCursor, {passive:true});
+  }
+
+  /* ── SKILLS SPINE cursor ── */
+  const skCursor   = document.querySelector('.sk-spine-cursor');
+  const skSpineWrap = document.querySelector('.sk-spine-wrap');
+  if(skCursor && skSpineWrap){
+    const skSection = document.getElementById('skills');
+    document.addEventListener('mousemove', function(ev){
+      if(!skSection) return;
+      const secRect = skSection.getBoundingClientRect();
+      const spRect  = skSpineWrap.getBoundingClientRect();
+      const near    = Math.abs(ev.clientX - (spRect.left + spRect.width/2)) < 160;
+      if(ev.clientY >= secRect.top && ev.clientY <= secRect.bottom && near){
+        skCursor.style.opacity = '1';
+        const relY = Math.max(0, Math.min(spRect.height, ev.clientY - spRect.top));
+        skCursor.style.top = relY + 'px';
+      } else {
+        skCursor.style.opacity = '0';
+      }
+    }, {passive:true});
+  }
+})();
+
+/* CONTACT — galactic decorations */
+(function(){
+  /* stars */
+  const stEl = document.getElementById('coStars');
+  if(stEl){
+    const COLS2=['#e0f2fe','#c7d2fe','#a5f3fc','#ffffff','#fde68a','#c4b5fd'];
+    for(let i=0;i<70;i++){
+      const s=document.createElement('div');
+      s.className='co-st';
+      const sz=Math.random()<.08?2.5:1;
+      s.style.cssText=`width:${sz}px;height:${sz}px;left:${Math.random()*100}%;top:${Math.random()*100}%;background:${COLS2[i%COLS2.length]};box-shadow:0 0 ${sz*3}px ${COLS2[i%COLS2.length]};animation-duration:${1.5+Math.random()*4}s;animation-delay:${Math.random()*6}s`;
+      stEl.appendChild(s);
+    }
+  }
+  /* hex canvas */
+  const hxEl=document.getElementById('coHex');
+  if(hxEl){
+    const parent=hxEl.parentElement;
+    const W2=parent.offsetWidth||900,H2=parent.offsetHeight||700;
+    hxEl.width=W2;hxEl.height=H2;
+    const ctx2=hxEl.getContext('2d'),s2=44,dx2=s2*1.732,dy2=s2*1.5;
+    ctx2.strokeStyle='rgba(42,127,255,1)';ctx2.lineWidth=.5;
+    for(let row=0;row<Math.ceil(H2/dy2)+2;row++){
+      for(let col=0;col<Math.ceil(W2/dx2)+2;col++){
+        const ox=col%2===0?0:dx2/2,cx2=col*dx2+ox,cy2=row*dy2;
+        ctx2.beginPath();
+        for(let a=0;a<6;a++){const ang=(Math.PI/3)*a-Math.PI/6;ctx2.lineTo(cx2+s2*Math.cos(ang),cy2+s2*Math.sin(ang));}
+        ctx2.closePath();ctx2.stroke();
+      }
+    }
+  }
+})();
+
+/* ════════════════════════════════════════════════
+   EMAILJS — Contact Form Integration
+   For setup instructions see comments below
+   ════════════════════════════════════════════════
+   SETUP STEPS (one-time, 5 minutes):
+   1. Go to https://www.emailjs.com → Sign up free
+   2. Add Email Service → Connect Gmail (prakashmrinal9@gmail.com)
+      → copy the SERVICE_ID
+   3. Email Templates → Create New Template
+      Subject: "New Portfolio Message from {{from_name}}"
+      Body: "From: {{from_name}} ({{reply_to}})\nService: {{service}}\n\n{{message}}"
+      → copy the TEMPLATE_ID
+   4. Account → API Keys → copy your PUBLIC_KEY
+   5. Replace the three placeholders below and you're live!
+*/
+(function(){
+  const PUBLIC_KEY   = 'Z6MQ5YHmzybmO_h1a';    
+  const SERVICE_ID   = 'service_a1mxgof';    
+  const TEMPLATE_ID  = 'template_9gprq5g';   
+
+  window.sendEmail = async function(ev){
+    ev.preventDefault();
+    const btn    = document.getElementById('cfSubmit');
+    const status = document.getElementById('cfStatus');
+    const form   = document.getElementById('contactForm');
+
+    /* Validate */
+    const name  = document.getElementById('cf_name').value.trim();
+    const email = document.getElementById('cf_email').value.trim();
+    const msg   = document.getElementById('cf_msg').value.trim();
+    const svc   = document.getElementById('cf_service').value;
+
+    if(!name || !email || !msg){
+      status.className='error';
+      status.textContent='⚠ Please fill in all required fields.';
+      status.style.display='block';
+      return;
+    }
+    const emailRx = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if(!emailRx.test(email)){
+      status.className='error';
+      status.textContent='⚠ Please enter a valid email address.';
+      status.style.display='block';
+      return;
+    }
+
+    /* Check keys are configured */
+    if(PUBLIC_KEY === 'YOUR_PUBLIC_KEY'){
+      status.className='error';
+      status.innerHTML='⚠ EmailJS not configured yet. See setup instructions in the HTML comments, or <a href="mailto:prakashmrinal9@gmail.com?subject=Portfolio%20Contact:%20'+encodeURIComponent(svc)+'&body=Name:%20'+encodeURIComponent(name)+'%0AEmail:%20'+encodeURIComponent(email)+'%0AMessage:%20'+encodeURIComponent(msg)+'" style="color:#00e5ff">click here to send via Gmail directly</a>.';
+      status.style.display='block';
+      return;
+    }
+
+    /* Send via EmailJS REST API (no SDK init needed — works from localhost) */
+    btn.disabled=true;
+    btn.classList.add('cf-loading');
+    btn.textContent='Sending...';
+    status.style.display='none';
+
+    try {
+      const res = await fetch('https://api.emailjs.com/api/v1.0/email/send', {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({
+          service_id:  SERVICE_ID,
+          template_id: TEMPLATE_ID,
+          user_id:     PUBLIC_KEY,
+          template_params: {
+            from_name: name,
+            reply_to:  email,
+            service:   svc,
+            message:   msg,
+            to_name:   'Mrinal Prakash'
+          }
+        })
+      });
+      if(!res.ok){
+        const errText = await res.text();
+        throw new Error(errText);
+      }
+      status.className='success';
+      status.textContent='✓ Message sent! I will reply within 24 hours.';
+      status.style.display='block';
+      form.reset();
+      btn.textContent='Message Sent ✓';
+      setTimeout(()=>{btn.textContent='Send Message ⚡';btn.disabled=false;btn.classList.remove('cf-loading');},4000);
+    } catch(err){
+      console.error('EmailJS error:',err);
+      status.className='error';
+      status.textContent='✕ Failed to send. Please email me directly: prakashmrinal9@gmail.com';
+      status.style.display='block';
+      btn.disabled=false;
+      btn.classList.remove('cf-loading');
+      btn.textContent='Send Message ⚡';
+    }
+  };
+})();
+
 </script>
 </body>
 </html> 
