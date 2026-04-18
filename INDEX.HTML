@@ -1035,9 +1035,7 @@ let li=0,ci=0,del=false;
 function type(){const el=document.getElementById('typing');if(!el)return;const cur=lines[li];if(!del){el.textContent=cur.slice(0,++ci);if(ci===cur.length){del=true;setTimeout(type,2000);return;}}else{el.textContent=cur.slice(0,--ci);if(ci===0){del=false;li=(li+1)%lines.length;}}setTimeout(type,del?38:78);}
 type();
 
-/* PARTICLES */
-const pc=document.getElementById('ptcls');
-for(let i=0;i<22;i++){const p=document.createElement('div');p.className='pt';p.style.left=Math.random()*100+'%';p.style.height=(Math.random()*70+35)+'px';p.style.animationDuration=(Math.random()*6+5)+'s';p.style.animationDelay=(Math.random()*10)+'s';p.style.width=Math.random()<.25?'2px':'1px';pc.appendChild(p);}
+/* PARTICLES — removed, space canvas handles stars */
 
 /* STARS */
 ['expStars','skStars'].forEach(id=>{const el=document.getElementById(id);if(!el)return;for(let i=0;i<50;i++){const s=document.createElement('div');s.className=id==='expStars'?'estr':'sk-st';const z=Math.random()<.12?2:1;s.style.cssText=`width:${z}px;height:${z}px;left:${Math.random()*100}%;top:${Math.random()*100}%;background:#e8f4fd;animation-duration:${2+Math.random()*4}s;animation-delay:${Math.random()*5}s`;el.appendChild(s);}});
