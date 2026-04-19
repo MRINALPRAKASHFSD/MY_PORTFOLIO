@@ -119,7 +119,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:999;padding:.9rem 2rem;display:f
 /* Name glow bloom under text */
 .name-glow{position:absolute;bottom:-8px;left:50%;transform:translateX(-50%);width:70%;height:40px;background:radial-gradient(ellipse,rgba(0,229,255,.18) 0%,rgba(168,85,247,.08) 50%,transparent 70%);filter:blur(10px);animation:nameGlow 4s ease-in-out infinite;pointer-events:none}
 @keyframes nameGlow{0%,100%{opacity:.55;transform:translateX(-50%) scaleX(1)}50%{opacity:1;transform:translateX(-50%) scaleX(1.1)}}
-.hero-sub{font-size:1rem;color:var(--muted);margin-bottom:.75rem;text-align:center}
+.hero-sub{font-size:1rem;color:var(--text);opacity:0.85;margin-bottom:.75rem;text-align:center}
 .typing-wrap{height:1.8rem;margin-bottom:2rem;text-align:center}
 #typing{font-family:'Share Tech Mono',monospace;font-size:.95rem;color:var(--cyan);border-right:2px solid var(--cyan);padding-right:4px;animation:cb .8s infinite}
 @keyframes cb{0%,100%{border-color:var(--cyan)}50%{border-color:transparent}}
@@ -131,7 +131,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:999;padding:.9rem 2rem;display:f
 .tech-stats-banner{display:flex;justify-content:space-evenly;align-items:center;width:100%;max-width:850px;margin:3.5rem auto 0;padding:1.5rem 0;background:linear-gradient(90deg,rgba(0,229,255,.05),rgba(124,58,237,.12),rgba(0,229,255,.05));border-top:1px solid rgba(0,229,255,.15);border-bottom:1px solid rgba(124,58,237,.2);backdrop-filter:blur(8px)}
 .ts-item{text-align:center;flex:1}
 .ts-val{font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;background:linear-gradient(135deg,var(--cyan),var(--blue2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-shadow:0 0 15px rgba(0,229,255,.4);line-height:1}
-.ts-lbl{font-family:'Share Tech Mono',monospace;font-size:.7rem;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-top:.4rem}
+.ts-lbl{font-family:'Share Tech Mono',monospace;font-size:.7rem;color:var(--text);opacity:0.75;letter-spacing:.15em;text-transform:uppercase;margin-top:.4rem;text-shadow:0 0 10px rgba(255,255,255,0.1)}
 
 /* SHARED SECTION */
 section{padding:5rem 2rem}
@@ -556,8 +556,8 @@ footer{background:rgba(4,8,18,.82);border-top:1px solid rgba(255,255,255,.04);pa
       <a href="mailto:prakashmrinal9@gmail.com" class="btn-o">💼 Hire Me</a>
     </div>
     <div class="tech-stats-banner">
-      <div class="ts-item"><div class="ts-val">3+</div><div class="ts-lbl">Years of Experience</div></div>
-      <div class="ts-item"><div class="ts-val">5+</div><div class="ts-lbl">Live Projects</div></div>
+      <div class="ts-item"><div class="ts-val" id="expYears">3+</div><div class="ts-lbl">Years of Experience</div></div>
+      <div class="ts-item"><div class="ts-val" id="liveProjects">5+</div><div class="ts-lbl">Live Projects</div></div>
       <div class="ts-item"><div class="ts-val" id="liveLnFollowers">...</div><div class="ts-lbl">LinkedIn Followers</div></div>
     </div>
   </div>
@@ -1596,12 +1596,14 @@ window.addEventListener('resize',()=>{drawHex('expHex');drawHex('skHex');});
   };
 })();
 
-/* LINKEDIN FOLLOWERS ANIMATOR */
+/* STATS ANIMATOR & LINKEDIN MATCHER */
 (function(){
   const tsL = document.getElementById('liveLnFollowers');
-  if(!tsL) return;
+  const expY = document.getElementById('expYears');
+  const liveP = document.getElementById('liveProjects');
 
-  function animateCount(target, duration = 2000) {
+  function animateCount(el, target, duration = 2000, isK = false) {
+    if(!el) return;
     let start = 1;
     let startTime = null;
     function step(timestamp) {
@@ -1610,21 +1612,27 @@ window.addEventListener('resize',()=>{drawHex('expHex');drawHex('skHex');});
       const easeProgress = 1 - Math.pow(1 - progress, 4); // easeOutQuart
       const current = Math.floor(start + (target - start) * easeProgress);
       
-      if(current >= 1000) tsL.innerText = (current/1000).toFixed(1).replace('.0', '') + 'k+';
-      else tsL.innerText = current;
+      if(isK && current >= 1000) {
+        el.innerText = (current/1000).toFixed(1).replace('.0', '') + 'k+';
+      } else {
+        el.innerText = current + (progress < 1 ? '' : '+');
+      }
       
       if (progress < 1) window.requestAnimationFrame(step);
       else {
-        if(target >= 1000) tsL.innerText = (target/1000).toFixed(1).replace('.0', '') + 'k+';
-        else tsL.innerText = target + '+';
+        if(isK && target >= 1000) el.innerText = (target/1000).toFixed(1).replace('.0', '') + 'k+';
+        else el.innerText = target + '+';
       }
     }
     window.requestAnimationFrame(step);
   }
 
-  // Start rapid animation IMMEDIATELY for snappy UX without waiting for network
+  // Start rapid animations IMMEDIATELY for snappy UX
+  animateCount(expY, 3, 1000); // Super fast 1s animation
+  animateCount(liveP, 5, 1200); // Super fast 1.2s animation
+  
   let finalCount = 6000;
-  animateCount(finalCount, 1500); // Super fast 1.5s animation
+  animateCount(tsL, finalCount, 1500, true); // 1.5s animation with 'k' formatting
 
   // Background fetch decoupled from animation
   fetch('https://api.allorigins.win/get?url=' + encodeURIComponent('https://www.linkedin.com/in/mrinal-prakash'))
