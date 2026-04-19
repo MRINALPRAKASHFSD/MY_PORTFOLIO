@@ -10,7 +10,8 @@
 *{margin:0;padding:0;box-sizing:border-box}
 :root{--bg:#03070f;--bg2:#060c17;--bg3:#0a1220;--cyan:#00e5ff;--blue:#1755a7;--blue2:#2a7fff;--green:#00ff88;--red:#ff3366;--amber:#ffaa00;--purple:#7c3aed;--text:#e8f4fd;--muted:#a8c1d9;--bdr:rgba(255,255,255,.07);--card:rgba(255,255,255,.032)}
 html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--text);font-family:'Space Grotesk',sans-serif;overflow-x:hidden;text-align:justify;background-image:radial-gradient(ellipse 900px 700px at 10% 20%,rgba(124,58,237,.09) 0%,transparent 65%),radial-gradient(ellipse 700px 500px at 90% 10%,rgba(0,229,255,.07) 0%,transparent 55%),radial-gradient(ellipse 800px 600px at 60% 90%,rgba(42,127,255,.08) 0%,transparent 60%),radial-gradient(ellipse 500px 400px at 30% 70%,rgba(0,255,136,.05) 0%,transparent 55%);background-attachment:fixed}
+body{background:var(--bg);color:var(--text);font-family:'Space Grotesk',sans-serif;overflow-x:hidden;text-align:justify;background-image:radial-gradient(ellipse 900px 700px at 10% 20%,rgba(124,58,237,.09) 0%,transparent 65%),radial-gradient(ellipse 700px 500px at 90% 10%,rgba(0,229,255,.07) 0%,transparent 55%),radial-gradient(ellipse 800px 600px at 60% 90%,rgba(42,127,255,.08) 0%,transparent 60%),radial-gradient(ellipse 500px 400px at 30% 70%,rgba(0,255,136,.05) 0%,transparent 55%);background-attachment:fixed;contain:none}
+section{contain:content;position:relative}
 
 /* ════════════════════════════════
    SPACE CANVAS — full-page galaxy
@@ -1412,56 +1413,68 @@ window.addEventListener('resize',()=>{drawHex('expHex');drawHex('skHex');});
     wrap.appendChild(el);
   }
 
-  /* ── EXPERIENCE SPINE CURSOR TRACKING (fixed) ── */
-  const expCursor   = document.getElementById('expSpineCursor');
+  /* ── SPINE CURSOR TRACKING (Optimized) ── */
+  let lastExpMove = 0;
+  const expCursor = document.getElementById('expSpineCursor');
   const expSpineWrap = document.querySelector('.exp-spine-wrap');
-  if(expCursor && expSpineWrap){
-    const expSection = document.getElementById('experience');
-    function updateExpCursor(ev){
-      if(!expSection) return;
-      const secRect  = expSection.getBoundingClientRect();
-      const spRect   = expSpineWrap.getBoundingClientRect();
-      /* active when cursor is horizontally near the spine (±60px) and within the section vertically */
-      const nearSpine = Math.abs(ev.clientX - (spRect.left + spRect.width/2)) < 160;
-      if(ev.clientY >= secRect.top && ev.clientY <= secRect.bottom && nearSpine){
-        expCursor.style.opacity = '1';
-        /* position relative to spine wrap */
-        const relY = Math.max(0, Math.min(spRect.height, ev.clientY - spRect.top));
-        expCursor.style.top = relY + 'px';
+  const expSection = document.getElementById('experience');
+
+  function updateSpineCursor(ev, cursor, sec, wrap) {
+    if(!cursor || !sec || !wrap) return;
+    const secRect = sec.getBoundingClientRect();
+    const spRect = wrap.getBoundingClientRect();
+    const near = Math.abs(ev.clientX - (spRect.left + spRect.width/2)) < 160;
+    
+    if(ev.clientY >= secRect.top && ev.clientY <= secRect.bottom && near){
+      cursor.style.opacity = '1';
+      const relY = Math.max(0, Math.min(spRect.height, ev.clientY - spRect.top));
+      cursor.style.top = relY + 'px';
+      
+      if(cursor.id === 'expSpineCursor') {
         const pct = relY / Math.max(1, spRect.height);
-        /* cyan → purple → amber colour shift along spine */
         const r = Math.round(pct * 255);
         const g = Math.round(229 * (1 - pct*.55));
         const b = Math.round(255 * (1 - pct*.5));
         const gCol = `rgb(${r},${g},${b})`;
-        expCursor.style.background  = gCol;
-        expCursor.style.boxShadow   = `0 0 16px ${gCol},0 0 32px ${gCol}`;
-      } else {
-        expCursor.style.opacity = '0';
+        cursor.style.background = gCol;
+        cursor.style.boxShadow = `0 0 16px ${gCol},0 0 32px ${gCol}`;
       }
+    } else {
+      cursor.style.opacity = '0';
     }
-    document.addEventListener('mousemove', updateExpCursor, {passive:true});
   }
 
-  /* ── SKILLS SPINE cursor ── */
-  const skCursor   = document.querySelector('.sk-spine-cursor');
+  const skCursor = document.querySelector('.sk-spine-cursor');
   const skSpineWrap = document.querySelector('.sk-spine-wrap');
-  if(skCursor && skSpineWrap){
-    const skSection = document.getElementById('skills');
-    document.addEventListener('mousemove', function(ev){
-      if(!skSection) return;
-      const secRect = skSection.getBoundingClientRect();
-      const spRect  = skSpineWrap.getBoundingClientRect();
-      const near    = Math.abs(ev.clientX - (spRect.left + spRect.width/2)) < 160;
-      if(ev.clientY >= secRect.top && ev.clientY <= secRect.bottom && near){
-        skCursor.style.opacity = '1';
-        const relY = Math.max(0, Math.min(spRect.height, ev.clientY - spRect.top));
-        skCursor.style.top = relY + 'px';
+  const skSection = document.getElementById('skills');
+
+  document.addEventListener('mousemove', (ev) => {
+    const now = performance.now();
+    if (now - lastExpMove < 16) return; // ~60fps throttle
+    lastExpMove = now;
+    
+    updateSpineCursor(ev, expCursor, expSection, expSpineWrap);
+    updateSpineCursor(ev, skCursor, skSection, skSpineWrap);
+  }, {passive:true});
+
+  /* ── INTERSECTION OBSERVER for Animations ── */
+  const animObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      const section = entry.target;
+      if (entry.isIntersecting) {
+        section.style.setProperty('--anim-play', 'running');
+        section.classList.add('in-view');
       } else {
-        skCursor.style.opacity = '0';
+        section.style.setProperty('--anim-play', 'paused');
+        section.classList.remove('in-view');
       }
-    }, {passive:true});
-  }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('section').forEach(sec => {
+    sec.style.setProperty('--anim-play', 'paused');
+    animObserver.observe(sec);
+  });
 })();
 
 /* CONTACT — galactic decorations */
