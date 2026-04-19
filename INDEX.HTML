@@ -11,6 +11,9 @@
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🚀</text></svg>">
 <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Syne:wght@700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
+/* ════════════════════════════════
+   GLOBAL DESIGN SYSTEM
+   ════════════════════════════════ */
 *{margin:0;padding:0;box-sizing:border-box}
 :root{--bg:#03070f;--bg2:#060c17;--bg3:#0a1220;--cyan:#00e5ff;--blue:#1755a7;--blue2:#2a7fff;--green:#00ff88;--red:#ff3366;--amber:#ffaa00;--purple:#7c3aed;--text:#e8f4fd;--muted:#a8c1d9;--bdr:rgba(255,255,255,.07);--card:rgba(255,255,255,.032)}
 html{scroll-behavior:smooth}
@@ -1417,7 +1420,10 @@ window.addEventListener('resize',()=>{drawHex('expHex');drawHex('skHex');});
     wrap.appendChild(el);
   }
 
-  /* ── SPINE CURSOR TRACKING (Optimized) ── */
+  /* 
+     PERFORMANCE ENGINE 🚀
+     Intersection Observer pauses animations for off-screen sections to save GPU/CPU 
+  */
   let lastExpMove = 0;
   const expCursor = document.getElementById('expSpineCursor');
   const expSpineWrap = document.querySelector('.exp-spine-wrap');
