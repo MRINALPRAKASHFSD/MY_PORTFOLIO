@@ -1597,31 +1597,47 @@ window.addEventListener('resize',()=>{drawHex('expHex');drawHex('skHex');});
 })();
 
 /* LIVE LINKEDIN FOLLOWERS MATCHER */
+/* LIVE LINKEDIN FOLLOWERS MATCHER & ANIMATOR */
 (async function(){
   const tsL = document.getElementById('liveLnFollowers');
   if(!tsL) return;
+
+  function animateCount(target, duration = 2000) {
+    let start = 1;
+    let startTime = null;
+    function step(timestamp) {
+      if (!startTime) startTime = timestamp;
+      const progress = Math.min((timestamp - startTime) / duration, 1);
+      const easeProgress = 1 - Math.pow(1 - progress, 4); // easeOutQuart
+      const current = Math.floor(start + (target - start) * easeProgress);
+      
+      if(current >= 1000) tsL.innerText = (current/1000).toFixed(1).replace('.0', '') + 'k+';
+      else tsL.innerText = current;
+      
+      if (progress < 1) window.requestAnimationFrame(step);
+      else {
+        if(target >= 1000) tsL.innerText = (target/1000).toFixed(1).replace('.0', '') + 'k+';
+        else tsL.innerText = target + '+';
+      }
+    }
+    window.requestAnimationFrame(step);
+  }
+
+  let finalCount = 6000; // Exact base fallback requested
   try {
     const res = await fetch('https://api.allorigins.win/get?url=' + encodeURIComponent('https://www.linkedin.com/in/mrinal-prakash'));
-    if(!res.ok) throw new Error();
-    const data = await res.json();
-    const html = data.contents;
-    let match = html.match(/&quot;followerCount&quot;:(\d+)/) || html.match(/"followerCount":(\d+)/) || html.match(/>([\d,km+]+)\s+followers</i);
-    if(match && match[1]){
-      let countStr = match[1].replace(/,/g, '');
-      let num = parseInt(countStr);
-      if(!isNaN(num) && num >= 1000){
-        tsL.innerText = (num/1000).toFixed(1).replace('.0','') + 'k+';
-      } else if (!isNaN(num)){
-        tsL.innerText = num + '+';
-      } else {
-        tsL.innerText = match[1];
+    if(res.ok) {
+      const data = await res.json();
+      let match = data.contents.match(/&quot;followerCount&quot;:(\d+)/) || data.contents.match(/"followerCount":(\d+)/);
+      if(match && match[1]) {
+        let num = parseInt(match[1]);
+        if(!isNaN(num) && num > finalCount) finalCount = num;
       }
-    } else {
-      tsL.innerText = '1k+'; // Fallback
     }
-  } catch(e) {
-    tsL.innerText = '1k+'; // Fallback
-  }
+  } catch(e) { console.error('Follower fetch fallback triggered'); }
+
+  // Start rapid counting animation slightly after load
+  setTimeout(() => animateCount(finalCount, 2200), 300);
 })();
 </script>
 </body>
