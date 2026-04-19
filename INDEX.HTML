@@ -128,10 +128,10 @@ nav{position:fixed;top:0;left:0;right:0;z-index:999;padding:.9rem 2rem;display:f
 .btn-p:hover{transform:translateY(-3px);box-shadow:0 8px 30px rgba(23,85,167,.5)}
 .btn-o{background:rgba(0,229,255,.06);color:var(--cyan);border:1px solid rgba(0,229,255,.3);padding:.75rem 1.8rem;border-radius:8px;font-size:.88rem;font-weight:600;cursor:pointer;text-decoration:none;transition:all .25s}
 .btn-o:hover{background:rgba(0,229,255,.12);transform:translateY(-3px)}
-.hero-stats{display:flex;gap:2.5rem;justify-content:center;flex-wrap:wrap}
-.stat{text-align:center}
-.stat-n{font-family:'Syne',sans-serif;font-size:1.9rem;font-weight:800;background:linear-gradient(135deg,var(--cyan),var(--blue2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.stat-l{font-size:.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:.1em}
+.tech-stats-banner{display:flex;justify-content:space-evenly;align-items:center;width:100%;max-width:850px;margin:3.5rem auto 0;padding:1.5rem 0;background:linear-gradient(90deg,rgba(0,229,255,.05),rgba(124,58,237,.12),rgba(0,229,255,.05));border-top:1px solid rgba(0,229,255,.15);border-bottom:1px solid rgba(124,58,237,.2);backdrop-filter:blur(8px)}
+.ts-item{text-align:center;flex:1}
+.ts-val{font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;background:linear-gradient(135deg,var(--cyan),var(--blue2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-shadow:0 0 15px rgba(0,229,255,.4);line-height:1}
+.ts-lbl{font-family:'Share Tech Mono',monospace;font-size:.7rem;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-top:.4rem}
 
 /* SHARED SECTION */
 section{padding:5rem 2rem}
@@ -157,13 +157,7 @@ section{padding:5rem 2rem}
 .about-quote::after{content:'ENFJ';position:absolute;right:1.5rem;top:50%;transform:translateY(-50%);font-family:'Syne',sans-serif;font-size:3.5rem;font-weight:800;color:rgba(0,229,255,.04);pointer-events:none}
 .mbti-tag{font-family:'Share Tech Mono',monospace;font-size:.72rem;color:var(--cyan);margin-bottom:.5rem;text-align:left;letter-spacing:.06em}
 .mbti-q{font-size:.92rem;font-style:italic;line-height:1.7;color:var(--text);text-align:left}
-/* stats row */
-.about-stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}
-.sc{background:rgba(255,255,255,.042);border:1px solid var(--bdr);border-radius:14px;padding:1.2rem 1rem;text-align:center;transition:all .3s;position:relative;overflow:hidden}
-.sc::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,rgba(0,229,255,.3),transparent)}
-.sc:hover{border-color:rgba(0,229,255,.25);transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,.4)}
-.sc-n{font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;background:linear-gradient(135deg,var(--cyan),var(--blue2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1}
-.sc-l{font-size:.65rem;color:var(--muted);margin-top:.35rem;font-family:'Share Tech Mono',monospace;letter-spacing:.04em;text-transform:uppercase}
+/* Removed about-stats-row entirely as per new unified stats banner */
 /* edu grid - HORIZONTAL 4-column */
 .edu-section-label{font-family:'Share Tech Mono',monospace;font-size:.7rem;color:var(--cyan);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.9rem;padding-bottom:.4rem;border-bottom:1px solid rgba(0,229,255,.12);text-align:left}
 .edu-showcase{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}
@@ -506,7 +500,7 @@ footer{background:rgba(4,8,18,.82);border-top:1px solid rgba(255,255,255,.04);pa
 @media(max-width:768px){
   .about-grid,.contact-grid{grid-template-columns:1fr}
   .nav-links{display:none}
-  .hero-stats{gap:1rem}
+  .tech-stats-banner{flex-direction:column;gap:1.5rem;padding:2rem 0;background:linear-gradient(180deg,rgba(0,229,255,.05),rgba(124,58,237,.12));border:1px solid rgba(0,229,255,.1);border-left:none;border-right:none}
   .exp-pair,.sk-pair{grid-template-columns:1fr 56px}
   .exp-slot.right,.sk-slot.right{display:none}
   .exp-slot.left{padding-right:.8rem}
@@ -561,11 +555,10 @@ footer{background:rgba(4,8,18,.82);border-top:1px solid rgba(255,255,255,.04);pa
       <a href="#projects" class="btn-p">⚡ View Projects</a>
       <a href="mailto:prakashmrinal9@gmail.com" class="btn-o">💼 Hire Me</a>
     </div>
-    <div class="hero-stats">
-      <div class="stat"><div class="stat-n">10+</div><div class="stat-l">Roles Held</div></div>
-      <div class="stat"><div class="stat-n">1000+</div><div class="stat-l">Daily ML Req</div></div>
-      <div class="stat"><div class="stat-n">54hr</div><div class="stat-l">Hackathon Host</div></div>
-      <div class="stat"><div class="stat-n">50+</div><div class="stat-l">Devs Mentored</div></div>
+    <div class="tech-stats-banner">
+      <div class="ts-item"><div class="ts-val">3+</div><div class="ts-lbl">Years of Experience</div></div>
+      <div class="ts-item"><div class="ts-val">5+</div><div class="ts-lbl">Live Projects</div></div>
+      <div class="ts-item"><div class="ts-val" id="liveLnFollowers">...</div><div class="ts-lbl">[LIVE] LinkedIn Followers</div></div>
     </div>
   </div>
 </section>
@@ -583,13 +576,6 @@ footer{background:rgba(4,8,18,.82);border-top:1px solid rgba(255,255,255,.04);pa
         <div class="mbti-q">"I don't just code. I build scalable solutions that founders trust — combining technical excellence with people-first leadership and systems designed for 100x growth."</div>
       </div>
 
-      <!-- STATS ROW -->
-      <div class="about-stats-row">
-        <div class="sc"><div class="sc-n">10+</div><div class="sc-l">Roles Held</div></div>
-        <div class="sc"><div class="sc-n">100+</div><div class="sc-l">LeetCode Solved</div></div>
-        <div class="sc"><div class="sc-n">50+</div><div class="sc-l">Devs Mentored</div></div>
-        <div class="sc"><div class="sc-n">54hr</div><div class="sc-l">Hackathon Host</div></div>
-      </div>
 
       <!-- EDU & CERT CARDS — HORIZONTAL GRID -->
       <div>
@@ -1610,6 +1596,33 @@ window.addEventListener('resize',()=>{drawHex('expHex');drawHex('skHex');});
   };
 })();
 
+/* LIVE LINKEDIN FOLLOWERS MATCHER */
+(async function(){
+  const tsL = document.getElementById('liveLnFollowers');
+  if(!tsL) return;
+  try {
+    const res = await fetch('https://api.allorigins.win/get?url=' + encodeURIComponent('https://www.linkedin.com/in/mrinal-prakash'));
+    if(!res.ok) throw new Error();
+    const data = await res.json();
+    const html = data.contents;
+    let match = html.match(/&quot;followerCount&quot;:(\d+)/) || html.match(/"followerCount":(\d+)/) || html.match(/>([\d,km+]+)\s+followers</i);
+    if(match && match[1]){
+      let countStr = match[1].replace(/,/g, '');
+      let num = parseInt(countStr);
+      if(!isNaN(num) && num >= 1000){
+        tsL.innerText = (num/1000).toFixed(1).replace('.0','') + 'k+';
+      } else if (!isNaN(num)){
+        tsL.innerText = num + '+';
+      } else {
+        tsL.innerText = match[1];
+      }
+    } else {
+      tsL.innerText = '1k+'; // Fallback
+    }
+  } catch(e) {
+    tsL.innerText = '1k+'; // Fallback
+  }
+})();
 </script>
 </body>
 </html> 
