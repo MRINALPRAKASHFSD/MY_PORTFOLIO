@@ -72,10 +72,18 @@ nav{position:fixed;top:0;left:0;right:0;z-index:999;padding:.9rem 2rem;display:f
 
 33%{transform:translate(50px,60px) scale(1.1)}66%{transform:translate(-40px,-30px) scale(.97)}}
 
-/* ══ SHOOTING STARS ══ */
-.sst-wrap{position:absolute;inset:0;pointer-events:none;z-index:2;overflow:hidden}
-.sst{position:absolute;height:1px;width:0;border-radius:1px;animation:sstA linear infinite;will-change:transform,width,opacity}
-@keyframes sstA{0%{width:0;opacity:0;transform:translateX(-400px) translateY(0) rotate(-35deg)}5%{opacity:1;width:120px}25%{opacity:.3;width:200px}40%{opacity:0;width:60px}100%{opacity:0;width:0;transform:translateX(200vw) translateY(80vh) rotate(-35deg)}}
+/* ══ GLOBAL INTENSE GLOWING UNIVERSE ══ */
+.global-nova-wrap {position:fixed;inset:0;pointer-events:none;z-index:-1;overflow:hidden;background:#03070f}
+.nova-orb {position:absolute;border-radius:50%;filter:blur(160px);opacity:0.4;animation:novaFloat 24s ease-in-out infinite alternate;will-change:transform}
+.nova-orb:nth-child(1) {width:75vw;height:75vh;top:-15%;left:-15%;background:rgba(0,180,255,0.7);animation-delay:0s}
+.nova-orb:nth-child(2) {width:60vw;height:60vh;top:50%;right:-10%;background:rgba(124,58,237,0.8);animation-delay:-7s}
+.nova-orb:nth-child(3) {width:85vw;height:70vh;bottom:-25%;left:15%;background:rgba(0,255,150,0.6);animation-delay:-12s}
+.nova-orb:nth-child(4) {width:50vw;height:50vh;top:20%;left:50%;background:rgba(255,60,160,0.7);animation-delay:-18s}
+@keyframes novaFloat{
+  0%{transform:translate(0,0) scale(1)}
+  50%{transform:translate(8vw,-8vh) scale(1.1)}
+  100%{transform:translate(-6vw,10vh) scale(1.2)}
+}
 
 /* ══ HERO SWEEP LIGHT ══ */
 .hero-sweep{position:absolute;inset:0;pointer-events:none;z-index:1;overflow:hidden}
@@ -510,7 +518,12 @@ footer{background:rgba(4,8,18,.82);border-top:1px solid rgba(255,255,255,.04);pa
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 </head>
 <body>
-<div class="ga ga2"></div><div class="ga ga3"></div><div class="ga ga4"></div><div class="ga ga5"></div></div>
+<div class="global-nova-wrap">
+  <div class="nova-orb"></div>
+  <div class="nova-orb"></div>
+  <div class="nova-orb"></div>
+  <div class="nova-orb"></div>
+</div>
 <canvas id="spaceCanvas"></canvas>
 <div id="prog"></div>
 <nav>
@@ -531,7 +544,6 @@ footer{background:rgba(4,8,18,.82);border-top:1px solid rgba(255,255,255,.04);pa
     <div class="hero-glow-base"></div>
     <div class="hero-sweep"></div>
     <canvas id="heroCanvas"></canvas>
-    <div class="sst-wrap" id="sstWrap"></div>
     <div class="grid-ov"></div>
     <div class="hero-scan"></div>
     <div class="hero-vign"></div>
@@ -1116,24 +1128,7 @@ window.addEventListener('resize',()=>{drawHex('expHex');drawHex('skHex');});
   });
 })();
 
-/* ══ SHOOTING STARS ══ */
-(function(){
-  const wrap = document.getElementById('sstWrap');
-  if(!wrap) return;
-  const COLORS = ['rgba(165,243,252,0.9)','rgba(196,181,253,0.9)','rgba(110,231,183,0.85)','rgba(253,164,175,0.85)','rgba(255,255,255,0.9)'];
-  const count = 8;
-  for(let i=0;i<count;i++){
-    const el = document.createElement('div');
-    el.className = 'sst';
-    const col = COLORS[i % COLORS.length];
-    const dur = 5 + Math.random() * 8;
-    const delay = -(Math.random() * 18);
-    const top = Math.random() * 70;
-    const left = Math.random() * 60;
-    el.style.cssText = `top:${top}%;left:${left}%;background:linear-gradient(90deg,transparent,${col},transparent);animation-duration:${dur}s;animation-delay:${delay}s;box-shadow:0 0 4px ${col}`;
-    wrap.appendChild(el);
-  }
-})();
+/* ══ JS: SHOOTING STARS REMOVED FOR MORE GLOWING VIBE ══ */
 
 /* ════════════════════════════════════════════════════════════════════
    SPACE CANVAS — Galaxy Background Engine
@@ -1207,15 +1202,13 @@ window.addEventListener('resize',()=>{drawHex('expHex');drawHex('skHex');});
       });
       mwAdded++;
     }
-    /* ── Nebula blobs ── */
+    /* ── Glowing Nebula blobs for space canvas ── */
     nebulas = [
-      {x:W*.1, y:H*.15, r:Math.min(W,H)*.35, c:[124,58,237],  a:.11, dx:.008, dy:.005, ox:0, oy:0},
-      {x:W*.88,y:H*.08, r:Math.min(W,H)*.28, c:[0,180,255],   a:.09, dx:-.006,dy:.007, ox:0, oy:0},
-      {x:W*.55,y:H*.75, r:Math.min(W,H)*.3,  c:[0,210,140],   a:.08, dx:.007, dy:-.005,ox:0, oy:0},
-      {x:W*.2, y:H*.88, r:Math.min(W,H)*.24, c:[200,70,180],  a:.085,dx:-.005,dy:-.006,ox:0, oy:0},
-      {x:W*.78,y:H*.42, r:Math.min(W,H)*.22, c:[255,160,50],  a:.065,dx:.006, dy:.008, ox:0, oy:0},
-      {x:W*.38,y:H*.32, r:Math.min(W,H)*.2,  c:[60,120,255],  a:.07, dx:-.007,dy:.005, ox:0, oy:0},
-      {x:W*.65,y:H*.6,  r:Math.min(W,H)*.18, c:[0,255,150],   a:.055,dx:.005, dy:-.007,ox:0, oy:0},
+      {x:W*.15,y:H*.15, r:Math.min(W,H)*.45, c:[124,58,237],  a:.08, dx:.005, dy:.003, ox:0, oy:0},
+      {x:W*.85,y:H*.1,  r:Math.min(W,H)*.35, c:[0,180,255],   a:.07, dx:-.004,dy:.005, ox:0, oy:0},
+      {x:W*.5, y:H*.85, r:Math.min(W,H)*.4,  c:[0,210,140],   a:.06, dx:.005, dy:-.004,ox:0, oy:0},
+      {x:W*.2, y:H*.8,  r:Math.min(W,H)*.3,  c:[255,50,150],  a:.07, dx:-.003,dy:-.004,ox:0, oy:0},
+      {x:W*.8, y:H*.5,  r:Math.min(W,H)*.3,  c:[255,160,50],  a:.05, dx:.004, dy:.005, ox:0, oy:0},
     ];
   }
 
@@ -1317,7 +1310,7 @@ window.addEventListener('resize',()=>{drawHex('expHex');drawHex('skHex');});
     ctx.clearRect(0,0,W,H);
     drawNebulas();
     drawStars(t);
-    updateShooters(t);
+    // Canvas shooters removed to focus on glowing universe vibe
     requestAnimationFrame(frame);
   }
 
