@@ -73,7 +73,7 @@ This project is a testament to the power of the core web. **No npm install. No b
 ## 📬 Galactic Connections
 
 <p align="left">
-  <a href="https://linkedin.com/in/mrinalprakash-fullstackdeveloper"><img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" /></a>
+  <a href="https://linkedin.com/in/mrinal-prakash-fullstackdeveloper"><img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" /></a>
   <a href="https://github.com/MRINALPRAKASHFSD"><img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white" /></a>
   <a href="mailto:prakashmrinal9@gmail.com"><img src="https://img.shields.io/badge/Email-D14836?style=for-the-badge&logo=gmail&logoColor=white" /></a>
 </p>
