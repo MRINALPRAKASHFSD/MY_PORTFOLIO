@@ -123,7 +123,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:999;padding:.9rem 2rem;display:f
 @keyframes pl{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.7)}}
 /* NAME — VISIBLE + NEON GLOW matching particle network */
 .hero-name-wrap{position:relative;display:block;margin-bottom:1.4rem}
-.hero-name{font-family:'Syne',sans-serif;font-size:clamp(3.2rem,9vw,8rem);font-weight:800;line-height:.95;letter-spacing:-.04em;margin:0;text-align:center;white-space:normal;word-break:break-word;animation:nameReveal 1.4s cubic-bezier(.16,1,.3,1) .3s both}
+.hero-name{font-family:'Syne',sans-serif;font-size:clamp(3.2rem,9vw,8rem);font-weight:800;line-height:.95;letter-spacing:-.04em;margin:0;text-align:center;white-space:normal;word-break:keep-all;overflow-wrap:normal;animation:nameReveal 1.4s cubic-bezier(.16,1,.3,1) .3s both}
 @keyframes nameReveal{0%{opacity:0;transform:scale(1.12) translateY(28px);filter:blur(16px)}60%{opacity:1}100%{opacity:1;transform:none;filter:none}}
 .color-anim{background:linear-gradient(120deg,#a5f3fc 0%,#818cf8 18%,#c4b5fd 32%,#7dd3fc 46%,#6ee7b7 58%,#a78bfa 74%,#a5f3fc 100%);background-size:280% auto;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:nameShimmer 3.2s linear infinite,nameNeonPulse 5s ease-in-out infinite;display:inline-block}
 @keyframes nameShimmer{0%{background-position:0% center}100%{background-position:280% center}}
@@ -519,15 +519,15 @@ footer{background:rgba(4,8,18,.82);border-top:1px solid rgba(255,255,255,.04);pa
   .nav-links,.hire-btn{display:none}
   nav{padding:.8rem 1.2rem;justify-content:center}
   
-  /* Mobile Bottom Nav */
-  .mob-nav{display:flex;position:fixed;bottom:1.2rem;left:50%;transform:translateX(-50%);background:rgba(10,18,32,0.85);backdrop-filter:blur(15px);padding:.6rem 1.2rem;border-radius:100px;border:1px solid rgba(0,229,255,0.15);gap:1.5rem;z-index:1000;box-shadow:0 10px 40px rgba(0,0,0,0.5)}
-  .mob-nav a{color:var(--muted);text-decoration:none;font-size:1.1rem;display:flex;flex-direction:column;align-items:center;transition:all .3s}
-  .mob-nav a.active{color:var(--cyan);text-shadow:0 0 10px var(--cyan)}
-  .mob-nav span{font-size:0.5rem;text-transform:uppercase;margin-top:2px;letter-spacing:1px}
+  /* Mobile Bottom Nav — perfectly centered */
+  .mob-nav{display:flex;position:fixed;bottom:1.2rem;left:0;right:0;margin:0 auto;width:max-content;max-width:90vw;background:rgba(10,18,32,0.88);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);padding:.55rem 1.4rem;border-radius:100px;border:1px solid rgba(0,229,255,0.18);gap:1.8rem;z-index:9999;box-shadow:0 8px 32px rgba(0,0,0,0.6)}
+  .mob-nav a{color:var(--muted);text-decoration:none;font-size:1.2rem;display:flex;flex-direction:column;align-items:center;transition:color .3s,text-shadow .3s;min-width:36px}
+  .mob-nav a.active{color:var(--cyan);text-shadow:0 0 12px var(--cyan)}
+  .mob-nav span{font-size:0.48rem;text-transform:uppercase;margin-top:3px;letter-spacing:1.2px;font-weight:600}
 
-  /* Hero Adjustments */
+  /* Hero Adjustments — prevent word split */
   #hero{padding-top:4rem}
-  .hero-name{font-size:clamp(2.5rem, 12vw, 4rem);line-height:1}
+  .hero-name{font-size:clamp(2.2rem,10vw,3.5rem);line-height:1.05;word-break:keep-all;overflow-wrap:normal;white-space:normal}
   .hero-sub{font-size:0.9rem;padding:0 0.5rem}
   .cta-row{gap:0.8rem}
   .btn-p,.btn-o{padding:0.7rem 1.4rem;font-size:0.8rem;flex:1}
