@@ -20,7 +20,8 @@
 *{margin:0;padding:0;box-sizing:border-box}
 :root{--bg:#03070f;--bg2:#060c17;--bg3:#0a1220;--cyan:#00e5ff;--blue:#1755a7;--blue2:#2a7fff;--green:#00ff88;--red:#ff3366;--amber:#ffaa00;--purple:#7c3aed;--text:#e8f4fd;--muted:#a8c1d9;--bdr:rgba(255,255,255,.07);--card:rgba(255,255,255,.032)}
 html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--text);font-family:'Space Grotesk',sans-serif;overflow-x:hidden;text-align:justify;background-image:radial-gradient(ellipse 900px 700px at 10% 20%,rgba(124,58,237,.09) 0%,transparent 65%),radial-gradient(ellipse 700px 500px at 90% 10%,rgba(0,229,255,.07) 0%,transparent 55%),radial-gradient(ellipse 800px 600px at 60% 90%,rgba(42,127,255,.08) 0%,transparent 60%),radial-gradient(ellipse 500px 400px at 30% 70%,rgba(0,255,136,.05) 0%,transparent 55%);background-attachment:fixed;contain:none}
+body{background:var(--bg);color:var(--text);font-family:'Space Grotesk',sans-serif;overflow-x:hidden;text-align:justify;background-image:radial-gradient(ellipse 900px 700px at 10% 20%,rgba(124,58,237,.09) 0%,transparent 65%),radial-gradient(ellipse 700px 500px at 90% 10%,rgba(0,229,255,.07) 0%,transparent 55%),radial-gradient(ellipse 800px 600px at 60% 90%,rgba(42,127,255,.08) 0%,transparent 60%),radial-gradient(ellipse 500px 400px at 30% 70%,rgba(0,255,136,.05) 0%,transparent 55%);background-attachment:fixed;contain:none;font-size:clamp(0.9rem, 2vw, 1.05rem)}
+h1,h2,h3{text-wrap:balance}
 section{contain:content;position:relative}
 
 /* ════════════════════════════════
@@ -508,15 +509,62 @@ footer{background:rgba(4,8,18,.82);border-top:1px solid rgba(255,255,255,.04);pa
 .cf-loading::before{content:'';display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:sbSpin .8s linear infinite;margin-right:.5rem;vertical-align:middle}
 
 
+/* ════════════════════════════════
+   MOBILE OPTIMIZATIONS
+   ════════════════════════════════ */
+.mob-nav{display:none}
+
 @media(max-width:768px){
-  .about-grid,.contact-grid{grid-template-columns:1fr}
-  .nav-links{display:none}
-  .tech-stats-banner{flex-direction:column;gap:1.5rem;padding:2rem 0;background:linear-gradient(180deg,rgba(0,229,255,.05),rgba(124,58,237,.12));border:1px solid rgba(0,229,255,.1);border-left:none;border-right:none}
-  .exp-pair,.sk-pair{grid-template-columns:1fr 56px}
-  .exp-slot.right,.sk-slot.right{display:none}
-  .exp-slot.left{padding-right:.8rem}
-  .sk-slot.left{padding-right:.8rem}
-  .exp-card,.sk-card{max-width:100%}
+  section{padding:4rem 1.2rem}
+  .nav-links,.hire-btn{display:none}
+  nav{padding:.8rem 1.2rem;justify-content:center}
+  
+  /* Mobile Bottom Nav */
+  .mob-nav{display:flex;position:fixed;bottom:1.2rem;left:50%;transform:translateX(-50%);background:rgba(10,18,32,0.85);backdrop-filter:blur(15px);padding:.6rem 1.2rem;border-radius:100px;border:1px solid rgba(0,229,255,0.15);gap:1.5rem;z-index:1000;box-shadow:0 10px 40px rgba(0,0,0,0.5)}
+  .mob-nav a{color:var(--muted);text-decoration:none;font-size:1.1rem;display:flex;flex-direction:column;align-items:center;transition:all .3s}
+  .mob-nav a.active{color:var(--cyan);text-shadow:0 0 10px var(--cyan)}
+  .mob-nav span{font-size:0.5rem;text-transform:uppercase;margin-top:2px;letter-spacing:1px}
+
+  /* Hero Adjustments */
+  #hero{padding-top:4rem}
+  .hero-name{font-size:clamp(2.5rem, 12vw, 4rem);line-height:1}
+  .hero-sub{font-size:0.9rem;padding:0 0.5rem}
+  .cta-row{gap:0.8rem}
+  .btn-p,.btn-o{padding:0.7rem 1.4rem;font-size:0.8rem;flex:1}
+  
+  /* Stats Banner: 2-column grid for mobile */
+  .tech-stats-banner{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;padding:1.5rem;margin-top:2.5rem;border-radius:16px}
+  .ts-item:last-child{grid-column:span 2}
+  .ts-val{font-size:1.6rem}
+
+  /* About Grid */
+  .edu-showcase{grid-template-columns:1fr 1fr;gap:0.8rem}
+  .edu-card{padding:0.9rem}
+  .ec-title{font-size:0.75rem}
+  
+  /* Experience & Skills Timeline: Spine Left */
+  .exp-spine-wrap,.sk-spine-wrap{left:20px;transform:none}
+  .exp-pair,.sk-pair{grid-template-columns:36px 1fr;gap:0}
+  .exp-slot.left,.sk-slot.left{display:none}
+  .exp-slot.right,.sk-slot.right{display:flex;padding-left:1rem}
+  .exp-center-col,.sk-center-col{order:-1}
+  .enode-wrap,.snode-wrap{width:36px;height:36px}
+  .enode-emoji,.snode-emoji{font-size:1rem}
+  .enode-year,.snode-year{font-size:0.5rem}
+  
+  .exp-card,.sk-card{max-width:100%;padding:1rem}
+  
+  /* Projects Grid */
+  .projects-grid{grid-template-columns:1fr}
+  
+  /* Contact Form */
+  .contact-grid{grid-template-columns:1fr;gap:2rem}
+  #btt{bottom:5.5rem;right:1.2rem;width:38px;height:38px}
+}
+@media(max-width:480px){
+  .edu-showcase{grid-template-columns:1fr}
+  .tech-stats-banner{grid-template-columns:1fr}
+  .ts-item:last-child{grid-column:auto}
 }
 </style>
   <!-- EmailJS SDK -->
@@ -542,6 +590,15 @@ footer{background:rgba(4,8,18,.82);border-top:1px solid rgba(255,255,255,.04);pa
   </ul>
   <a href="RESUME.pdf" target="_blank" class="hire-btn" aria-label="View Resume PDF in new tab">📄 Resume</a>
 </nav>
+
+<!-- Mobile Bottom Nav -->
+<div class="mob-nav">
+  <a href="#about" title="About">👤<span>About</span></a>
+  <a href="#skills" title="Skills">⚡<span>Skills</span></a>
+  <a href="#projects" title="Projects">🚀<span>Projects</span></a>
+  <a href="#experience" title="Experience">💼<span>Work</span></a>
+  <a href="#contact" title="Contact">📧<span>Mail</span></a>
+</div>
 
 <!-- HERO -->
 <section id="hero">
@@ -1735,6 +1792,19 @@ window.addEventListener('resize',()=>{drawHex('expHex');drawHex('skHex');});
         }
       }
     }).catch(e => { /* Ignore on fail, keep default 6k+ */ });
+  // Mobile Nav Active State
+  const mobLinks = document.querySelectorAll('.mob-nav a');
+  const navObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        const id = entry.target.getAttribute('id');
+        mobLinks.forEach(link => {
+          link.classList.toggle('active', link.getAttribute('href') === '#' + id);
+        });
+      }
+    });
+  }, { threshold: 0.4 });
+  document.querySelectorAll('section').forEach(sec => navObserver.observe(sec));
 })();
 </script>
 </body>
