@@ -9,7 +9,10 @@
 <meta property="og:description" content="Building high-performance scalable solutions for founders. MERN | AI/ML | Cloud.">
 <meta property="og:type" content="website">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🚀</text></svg>">
-<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Syne:wght@700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Syne:wght@700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Syne:wght@700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap"></noscript>
 <style>
 /* ════════════════════════════════
    GLOBAL DESIGN SYSTEM
@@ -517,7 +520,7 @@ footer{background:rgba(4,8,18,.82);border-top:1px solid rgba(255,255,255,.04);pa
 }
 </style>
   <!-- EmailJS SDK -->
-  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 </head>
 <body>
 <div class="global-nova-wrap">
@@ -926,7 +929,16 @@ skillPairs.forEach((pair,i)=>{
     const pe=document.getElementById('skp'+uid);
     if(!ce||!ge||!pe) return;
     for(let k=0;k<5;k++){const p=document.createElement('div');p.className='spar';p.style.cssText=`left:${8+Math.random()*84}%;background:${sk.ac};opacity:0;width:2px;height:2px;border-radius:50%;position:absolute;animation:cpr linear infinite;animation-duration:${2.8+Math.random()*2.6}s;animation-delay:${Math.random()*4.5}s;--dx:${Math.random()*22-11}px`;pe.appendChild(p);}
-    ce.addEventListener('mousemove',ev=>{const r=ce.getBoundingClientRect();ge.style.background=`radial-gradient(ellipse 160px 110px at ${((ev.clientX-r.left)/r.width*100).toFixed(1)}% ${((ev.clientY-r.top)/r.height*100).toFixed(1)}%,${sk.ac}0f,transparent)`;ge.style.opacity='1';});
+    ce.addEventListener('mousemove',ev=>{
+      if(ce.ticking)return;
+      ce.ticking=true;
+      requestAnimationFrame(()=>{
+        const r=ce.getBoundingClientRect();
+        ge.style.background=`radial-gradient(ellipse 160px 110px at ${((ev.clientX-r.left)/r.width*100).toFixed(1)}% ${((ev.clientY-r.top)/r.height*100).toFixed(1)}%,${sk.ac}0f,transparent)`;
+        ge.style.opacity='1';
+        ce.ticking=false;
+      });
+    });
     ce.addEventListener('mouseleave',()=>{ge.style.opacity='0';});
   });
 });
@@ -1011,7 +1023,16 @@ for(let i=0;i<jobs.length;i+=2){
     const pw=document.getElementById('ep'+idx),ce=document.getElementById('ec'+idx),ge=document.getElementById('eg'+idx);
     if(!pw||!ce||!ge) return;
     for(let k=0;k<5;k++){const p=document.createElement('div');p.className='ecp';p.style.cssText=`left:${8+Math.random()*84}%;background:${j.ac};width:2px;height:2px;border-radius:50%;position:absolute;opacity:0;animation:cpr linear infinite;animation-duration:${2.8+Math.random()*2.6}s;animation-delay:${Math.random()*4.5}s;--dx:${Math.random()*22-11}px`;pw.appendChild(p);}
-    ce.addEventListener('mousemove',ev=>{const r=ce.getBoundingClientRect();ge.style.background=`radial-gradient(ellipse 160px 110px at ${((ev.clientX-r.left)/r.width*100).toFixed(1)}% ${((ev.clientY-r.top)/r.height*100).toFixed(1)}%,${j.ac}0f,transparent)`;ge.style.opacity='1';});
+    ce.addEventListener('mousemove',ev=>{
+      if(ce.ticking)return;
+      ce.ticking=true;
+      requestAnimationFrame(()=>{
+        const r=ce.getBoundingClientRect();
+        ge.style.background=`radial-gradient(ellipse 160px 110px at ${((ev.clientX-r.left)/r.width*100).toFixed(1)}% ${((ev.clientY-r.top)/r.height*100).toFixed(1)}%,${j.ac}0f,transparent)`;
+        ge.style.opacity='1';
+        ce.ticking=false;
+      });
+    });
     ce.addEventListener('mouseleave',()=>{ge.style.opacity='0';});
   });
 }
@@ -1022,17 +1043,42 @@ const expSpine=document.getElementById('expSpineFill');
 const skSpine=document.getElementById('skSpineFill');
 const expSec=document.getElementById('experience');
 const skSec=document.getElementById('skills');
+let _scrollTicking=false;
+
 function onScroll(){
-  const s=document.documentElement.scrollTop,h=document.documentElement.scrollHeight-window.innerHeight;
-  document.getElementById('prog').style.width=(s/h*100)+'%';
-  document.getElementById('btt').classList[s>300?'add':'remove']('vis');
-  const vh=window.innerHeight;
-  if(expSec){const r=expSec.getBoundingClientRect();expSpine.style.height=(Math.max(0,Math.min(1,(-r.top+vh*.65)/r.height))*100)+'%';}
-  if(skSec){const r=skSec.getBoundingClientRect();skSpine.style.height=(Math.max(0,Math.min(1,(-r.top+vh*.65)/r.height))*100)+'%';}
-  document.querySelectorAll('.exp-pair-reveal,.sk-pair-reveal').forEach(rw=>{if(rw.getBoundingClientRect().top<vh*.9)rw.classList.add('show');});
-  document.querySelectorAll('.reveal').forEach(el=>{if(el.getBoundingClientRect().top<vh*.88)el.classList.add('visible');});
+  if(_scrollTicking)return;
+  _scrollTicking=true;
+  requestAnimationFrame(()=>{
+    const s=document.documentElement.scrollTop,h=document.documentElement.scrollHeight-window.innerHeight;
+    const vh=window.innerHeight;
+    
+    // DOM Reads
+    const expTop = expSec ? expSec.getBoundingClientRect().top : null;
+    const expH = expSec ? expSec.getBoundingClientRect().height : null;
+    const skTop = skSec ? skSec.getBoundingClientRect().top : null;
+    const skH = skSec ? skSec.getBoundingClientRect().height : null;
+    
+    const reveals = [];
+    document.querySelectorAll('.exp-pair-reveal:not(.show),.sk-pair-reveal:not(.show),.reveal:not(.visible)').forEach(el=>{
+      if(el.getBoundingClientRect().top < vh*.88) reveals.push(el);
+    });
+
+    // DOM Writes
+    document.getElementById('prog').style.width=(s/h*100)+'%';
+    document.getElementById('btt').classList[s>300?'add':'remove']('vis');
+    
+    if(expSec){expSpine.style.height=(Math.max(0,Math.min(1,(-expTop+vh*.65)/expH))*100)+'%';}
+    if(skSec){skSpine.style.height=(Math.max(0,Math.min(1,(-skTop+vh*.65)/skH))*100)+'%';}
+    
+    reveals.forEach(el=>{
+      if(el.classList.contains('reveal')) el.classList.add('visible');
+      else el.classList.add('show');
+    });
+    
+    _scrollTicking=false;
+  });
 }
-let _st=0;window.addEventListener('scroll',()=>{if(Date.now()-_st>16){_st=Date.now();onScroll();}},{passive:true});
+window.addEventListener('scroll',onScroll,{passive:true});
 setTimeout(onScroll,200);
 
 /* TYPING */
@@ -1428,32 +1474,6 @@ window.addEventListener('resize',()=>{drawHex('expHex');drawHex('skHex');});
   const expCursor = document.getElementById('expSpineCursor');
   const expSpineWrap = document.querySelector('.exp-spine-wrap');
   const expSection = document.getElementById('experience');
-
-  function updateSpineCursor(ev, cursor, sec, wrap) {
-    if(!cursor || !sec || !wrap) return;
-    const secRect = sec.getBoundingClientRect();
-    const spRect = wrap.getBoundingClientRect();
-    const near = Math.abs(ev.clientX - (spRect.left + spRect.width/2)) < 160;
-    
-    if(ev.clientY >= secRect.top && ev.clientY <= secRect.bottom && near){
-      cursor.style.opacity = '1';
-      const relY = Math.max(0, Math.min(spRect.height, ev.clientY - spRect.top));
-      cursor.style.top = relY + 'px';
-      
-      if(cursor.id === 'expSpineCursor') {
-        const pct = relY / Math.max(1, spRect.height);
-        const r = Math.round(pct * 255);
-        const g = Math.round(229 * (1 - pct*.55));
-        const b = Math.round(255 * (1 - pct*.5));
-        const gCol = `rgb(${r},${g},${b})`;
-        cursor.style.background = gCol;
-        cursor.style.boxShadow = `0 0 16px ${gCol},0 0 32px ${gCol}`;
-      }
-    } else {
-      cursor.style.opacity = '0';
-    }
-  }
-
   const skCursor = document.querySelector('.sk-spine-cursor');
   const skSpineWrap = document.querySelector('.sk-spine-wrap');
   const skSection = document.getElementById('skills');
@@ -1463,8 +1483,42 @@ window.addEventListener('resize',()=>{drawHex('expHex');drawHex('skHex');});
     if (now - lastExpMove < 16) return; // ~60fps throttle
     lastExpMove = now;
     
-    updateSpineCursor(ev, expCursor, expSection, expSpineWrap);
-    updateSpineCursor(ev, skCursor, skSection, skSpineWrap);
+    // READS
+    const expSecRect = expSection ? expSection.getBoundingClientRect() : null;
+    const expSpRect = expSpineWrap ? expSpineWrap.getBoundingClientRect() : null;
+    const skSecRect = skSection ? skSection.getBoundingClientRect() : null;
+    const skSpRect = skSpineWrap ? skSpineWrap.getBoundingClientRect() : null;
+    
+    // WRITES
+    requestAnimationFrame(() => {
+      if(expCursor && expSecRect && expSpRect) {
+        const near = Math.abs(ev.clientX - (expSpRect.left + expSpRect.width/2)) < 160;
+        if(ev.clientY >= expSecRect.top && ev.clientY <= expSecRect.bottom && near){
+          expCursor.style.opacity = '1';
+          const relY = Math.max(0, Math.min(expSpRect.height, ev.clientY - expSpRect.top));
+          expCursor.style.top = relY + 'px';
+          const pct = relY / Math.max(1, expSpRect.height);
+          const r = Math.round(pct * 255);
+          const g = Math.round(229 * (1 - pct*.55));
+          const b = Math.round(255 * (1 - pct*.5));
+          const gCol = `rgb(${r},${g},${b})`;
+          expCursor.style.background = gCol;
+          expCursor.style.boxShadow = `0 0 16px ${gCol},0 0 32px ${gCol}`;
+        } else {
+          expCursor.style.opacity = '0';
+        }
+      }
+      if(skCursor && skSecRect && skSpRect) {
+        const near = Math.abs(ev.clientX - (skSpRect.left + skSpRect.width/2)) < 160;
+        if(ev.clientY >= skSecRect.top && ev.clientY <= skSecRect.bottom && near){
+          skCursor.style.opacity = '1';
+          const relY = Math.max(0, Math.min(skSpRect.height, ev.clientY - skSpRect.top));
+          skCursor.style.top = relY + 'px';
+        } else {
+          skCursor.style.opacity = '0';
+        }
+      }
+    });
   }, {passive:true});
 
   /* ── INTERSECTION OBSERVER for Animations ── */
