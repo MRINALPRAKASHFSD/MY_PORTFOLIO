@@ -76,6 +76,17 @@ nav{position:fixed;top:0;left:0;right:0;z-index:999;padding:.9rem 2rem;display:f
 #hero{min-height:100vh;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;padding:6rem 2rem 4rem;background:transparent}
 .hero-bg{position:absolute;inset:0}
 
+/* ══ HERO NEBULA CANVAS — extra depth inside hero section ══ */
+#heroNebula{
+  position:absolute;inset:0;
+  width:100%;height:100%;
+  z-index:0;
+  pointer-events:none;
+  opacity:0;
+  animation:nebFadeIn 2.8s ease 0.4s forwards;
+}
+@keyframes nebFadeIn{to{opacity:1}}
+
 /* aurora replaced by space canvas */50%{transform:translate(40px,-50px) scale(1.15)}}
 
 /* GRID */
@@ -602,6 +613,8 @@ footer{background:rgba(4,8,18,.82);border-top:1px solid rgba(255,255,255,.04);pa
 
 <!-- HERO -->
 <section id="hero">
+  <!-- Hero nebula canvas — pure CSS/Canvas, no video, no lag -->
+  <canvas id="heroNebula" aria-hidden="true"></canvas>
   <div class="hero-bg">
     <div class="hero-glow-base"></div>
     <div class="hero-sweep"></div>
@@ -609,7 +622,6 @@ footer{background:rgba(4,8,18,.82);border-top:1px solid rgba(255,255,255,.04);pa
     <div class="grid-ov"></div>
     <div class="hero-scan"></div>
     <div class="hero-vign"></div>
-    
   </div>
   <div class="hero-content">
     <div class="hero-badge"><span class="pulse"></span>&nbsp;Open to freelance &amp; internships · Delhi-NCR</div>
@@ -854,7 +866,7 @@ footer{background:rgba(4,8,18,.82);border-top:1px solid rgba(255,255,255,.04);pa
         <div class="fg"><label>Email</label><input type="email" placeholder="your@email.com"/></div>
         <div class="fg"><label>Service</label><select><option>MERN / Full-Stack App</option><option>AI / ML Integration</option><option>Backend API Development</option><option>Frontend / UI Design</option><option>Flutter Mobile App</option><option>Cloud / AWS Setup</option><option>Startup Consulting</option><option>Technical Leadership</option><option>Other</option></select></div>
         <div class="fg"><label>Message</label><textarea placeholder="Tell me about your project..."></textarea></div>
-        <button class="sub-btn" onclick="this.classList.add('sent');this.textContent='Message Sent ✓'">Send Message ⚡</button>
+        <button class="sub-btn" id="contactSubmit" onclick="submitMockContact(this)">Send Message ⚡</button>
       </div>
     </div>
   </div>
@@ -1772,26 +1784,42 @@ window.addEventListener('resize',()=>{drawHex('expHex');drawHex('skHex');});
     window.requestAnimationFrame(step);
   }
 
-  // Start rapid animations IMMEDIATELY for snappy UX
-  animateCount(expY, 3, 1000); // Super fast 1s animation
-  animateCount(liveP, 5, 1200); // Super fast 1.2s animation
+  // Intersection Observer to trigger animations when section is visible
+  const statsSection = document.querySelector('.tech-stats-banner');
+  const statsObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        animateCount(expY, 3, 1000);
+        animateCount(liveP, 5, 1200);
+        animateCount(tsL, finalCount, 1500, true);
+        statsObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.5 });
   
-  let finalCount = 6000;
-  animateCount(tsL, finalCount, 1500, true); // 1.5s animation with 'k' formatting
+  if(statsSection) statsObserver.observe(statsSection);
 
   // Background fetch decoupled from animation
   fetch('https://api.allorigins.win/get?url=' + encodeURIComponent('https://www.linkedin.com/in/mrinal-prakash-fullstackdeveloper'))
     .then(res => res.json())
     .then(data => {
-      let match = data.contents.match(/&quot;followerCount&quot;:(\d+)/) || data.contents.match(/"followerCount":(\d+)/);
+      let match = data.contents.match(/&quot;followerCount&quot;:(\d+)/) || 
+                  data.contents.match(/"followerCount":(\d+)/);
+      if(!match) {
+        let textMatch = data.contents.match(/>([\d,]+)\s+followers</i);
+        if(textMatch) match = [null, textMatch[1].replace(/,/g, '')];
+      }
       if(match && match[1]) {
         let num = parseInt(match[1]);
-        if(!isNaN(num) && num > finalCount) {
-          // If fetch found a higher number, update element directly
-          tsL.innerText = (num/1000).toFixed(1).replace('.0', '') + 'k+';
+        if(!isNaN(num) && num > 0) {
+          finalCount = num; 
+          // If already visible and animated, update to real count
+          if(tsL.innerText !== '...') {
+            tsL.innerText = (num >= 1000) ? (num/1000).toFixed(1).replace('.0', '') + 'k+' : num + '+';
+          }
         }
       }
-    }).catch(e => { /* Ignore on fail, keep default 6k+ */ });
+    }).catch(e => {});
   // Mobile Nav Active State
   const mobLinks = document.querySelectorAll('.mob-nav a');
   const navObserver = new IntersectionObserver((entries) => {
@@ -1806,8 +1834,168 @@ window.addEventListener('resize',()=>{drawHex('expHex');drawHex('skHex');});
   }, { threshold: 0.4 });
   document.querySelectorAll('section').forEach(sec => navObserver.observe(sec));
 })();
+
+/* ══════════════════════════════════════════════
+   HERO NEBULA CANVAS — animated galaxy backdrop
+   Pure canvas, 60fps, zero video, zero lag
+   ══════════════════════════════════════════════ */
+(function(){
+  const cv = document.getElementById('heroNebula');
+  if(!cv) return;
+  const ctx = cv.getContext('2d');
+
+  // Portfolio palette — exactly matching CSS vars
+  const PALETTE = [
+    [0,   229, 255],   // --cyan
+    [42,  127, 255],   // --blue2
+    [124, 58,  237],   // --purple
+    [0,   255, 136],   // --green
+    [23,  85,  167],   // --blue
+  ];
+
+  let W, H, stars = [], nebulas = [], drifters = [];
+  let raf;
+
+  function resize(){
+    W = cv.width  = cv.offsetWidth  || window.innerWidth;
+    H = cv.height = cv.offsetHeight || window.innerHeight;
+    init();
+  }
+
+  function rnd(a, b){ return a + Math.random()*(b-a); }
+
+  function init(){
+    // ── Nebula blobs (large, slow, theme-coloured) ──
+    nebulas = PALETTE.map((c, i) => ({
+      x: rnd(0.1, 0.9) * W,
+      y: rnd(0.05, 0.95) * H,
+      r: Math.min(W, H) * rnd(0.28, 0.52),
+      c,
+      a: rnd(0.055, 0.11),
+      vx: (Math.random() - 0.5) * 0.22,
+      vy: (Math.random() - 0.5) * 0.16,
+      phase: rnd(0, Math.PI * 2),
+      freq:  rnd(0.0004, 0.0009),
+    }));
+
+    // ── Dense local star field ──
+    stars = Array.from({length: 320}, () => ({
+      x: Math.random() * W,
+      y: Math.random() * H,
+      r: rnd(0.1, 1.4),
+      base: rnd(0.08, 0.7),
+      amp:  rnd(0.04, 0.28),
+      ph:   rnd(0, Math.PI * 2),
+      sp:   rnd(0.0008, 0.003),
+      col:  `rgba(${[...PALETTE[Math.floor(Math.random()*PALETTE.length)]].join(',')},`,
+    }));
+
+    // ── Slow moving deep-space dust drifters ──
+    drifters = Array.from({length: 6}, () => ({
+      x: Math.random() * W,
+      y: Math.random() * H,
+      r: Math.min(W,H) * rnd(0.06, 0.14),
+      c: PALETTE[Math.floor(Math.random()*PALETTE.length)],
+      a: rnd(0.03, 0.07),
+      vx: (Math.random()-0.5) * 0.08,
+      vy: (Math.random()-0.5) * 0.06,
+    }));
+  }
+
+  function draw(t){
+    ctx.clearRect(0, 0, W, H);
+
+    // 1. Background void — same as body background
+    ctx.fillStyle = '#03070f';
+    ctx.fillRect(0, 0, W, H);
+
+    // 2. Large nebula blobs — additive 'screen' blend
+    ctx.save();
+    ctx.globalCompositeOperation = 'screen';
+    for(const n of nebulas){
+      n.x += n.vx; n.y += n.vy;
+      // Wrap softly
+      if(n.x < -n.r) n.x = W + n.r;
+      if(n.x >  W+n.r) n.x = -n.r;
+      if(n.y < -n.r) n.y = H + n.r;
+      if(n.y >  H+n.r) n.y = -n.r;
+      // Breathe
+      const breathe = 1 + 0.06 * Math.sin(t * n.freq + n.phase);
+      const rr = n.r * breathe;
+      const g = ctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, rr);
+      const [r,g2,b] = n.c;
+      g.addColorStop(0,    `rgba(${r},${g2},${b},${(n.a * 0.9).toFixed(3)})`);
+      g.addColorStop(0.35, `rgba(${r},${g2},${b},${(n.a * 0.45).toFixed(3)})`);
+      g.addColorStop(0.7,  `rgba(${r},${g2},${b},${(n.a * 0.1).toFixed(3)})`);
+      g.addColorStop(1,    `rgba(${r},${g2},${b},0)`);
+      ctx.beginPath();
+      ctx.arc(n.x, n.y, rr, 0, Math.PI * 2);
+      ctx.fillStyle = g;
+      ctx.fill();
+    }
+    ctx.restore();
+
+    // 3. Small dust drifters
+    ctx.save();
+    ctx.globalCompositeOperation = 'screen';
+    for(const d of drifters){
+      d.x += d.vx; d.y += d.vy;
+      if(d.x < -d.r) d.x = W + d.r;
+      if(d.x >  W+d.r) d.x = -d.r;
+      if(d.y < -d.r) d.y = H + d.r;
+      if(d.y >  H+d.r) d.y = -d.r;
+      const g = ctx.createRadialGradient(d.x, d.y, 0, d.x, d.y, d.r);
+      const [r,g2,b] = d.c;
+      g.addColorStop(0, `rgba(${r},${g2},${b},${d.a})`);
+      g.addColorStop(1, `rgba(${r},${g2},${b},0)`);
+      ctx.beginPath();
+      ctx.arc(d.x, d.y, d.r, 0, Math.PI*2);
+      ctx.fillStyle = g;
+      ctx.fill();
+    }
+    ctx.restore();
+
+    // 4. Twinkling stars
+    for(const s of stars){
+      const alpha = s.base + s.amp * Math.sin(t * s.sp + s.ph);
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+      ctx.fillStyle = s.col + alpha.toFixed(3) + ')';
+      ctx.fill();
+    }
+
+    raf = requestAnimationFrame(draw);
+  }
+
+  // Pause when tab hidden to save GPU
+  document.addEventListener('visibilitychange', () => {
+    if(document.hidden){ cancelAnimationFrame(raf); }
+    else { raf = requestAnimationFrame(draw); }
+  });
+
+  window.addEventListener('resize', () => {
+    clearTimeout(window.resT);
+    window.resT = setTimeout(resize, 150);
+  }, {passive: true});
+
+  resize();
+  raf = requestAnimationFrame(draw);
+})();
+
+function submitMockContact(btn) {
+  if(btn.classList.contains('sent')) return;
+  btn.innerHTML = 'Sending... <span class="spinner"></span>';
+  btn.style.opacity = '0.7';
+  btn.style.pointerEvents = 'none';
+  
+  setTimeout(() => {
+    btn.innerHTML = 'Message Sent ✓';
+    btn.style.opacity = '1';
+    btn.classList.add('sent');
+    // Optional: clear form
+    document.querySelectorAll('.fg input, .fg textarea').forEach(i => i.value = '');
+  }, 1500);
+}
 </script>
 </body>
-</html> 
-  
-   
+</html>
