@@ -1758,6 +1758,7 @@ window.addEventListener('resize',()=>{drawHex('expHex');drawHex('skHex');});
   const tsL = document.getElementById('liveLnFollowers');
   const expY = document.getElementById('expYears');
   const liveP = document.getElementById('liveProjects');
+  let finalCount = 6079; // Fallback LinkedIn count
 
   function animateCount(el, target, duration = 2000, isK = false) {
     if(!el) return;
@@ -1795,7 +1796,7 @@ window.addEventListener('resize',()=>{drawHex('expHex');drawHex('skHex');});
         statsObserver.unobserve(entry.target);
       }
     });
-  }, { threshold: 0.5 });
+  }, { threshold: 0.1 });
   
   if(statsSection) statsObserver.observe(statsSection);
 
