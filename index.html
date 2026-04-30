@@ -8,7 +8,12 @@
 <meta property="og:title" content="Mrinal Prakash — Full-Stack Developer">
 <meta property="og:description" content="Building high-performance scalable solutions for founders. MERN | AI/ML | Cloud.">
 <meta property="og:type" content="website">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🚀</text></svg>">
+<link rel="icon" type="image/png" href="favicon-32x32.png" sizes="32x32" />
+<link rel="icon" type="image/png" href="favicon-96x96.png" sizes="96x96" />
+<link rel="shortcut icon" href="favicon-32x32.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+<meta name="apple-mobile-web-app-title" content="MP Portfolio" />
+<link rel="manifest" href="site.webmanifest" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Syne:wght@700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
@@ -18,7 +23,7 @@
    GLOBAL DESIGN SYSTEM
    ════════════════════════════════ */
 *{margin:0;padding:0;box-sizing:border-box}
-:root{--bg:#03070f;--bg2:#060c17;--bg3:#0a1220;--cyan:#00e5ff;--blue:#1755a7;--blue2:#2a7fff;--green:#00ff88;--red:#ff3366;--amber:#ffaa00;--purple:#7c3aed;--text:#e8f4fd;--muted:#a8c1d9;--bdr:rgba(255,255,255,.07);--card:rgba(255,255,255,.032)}
+:root{--bg:#03070f;--bg2:#050a18;--bg3:#0a1220;--cyan:#00e5ff;--blue:#1755a7;--blue2:#2a7fff;--green:#00ff88;--red:#ff3366;--amber:#ffaa00;--purple:#7c3aed;--text:#e8f4fd;--muted:#a8c1d9;--bdr:rgba(255,255,255,.1);--card:rgba(255,255,255,.035);--glass:rgba(13,25,48,0.6);--glass-bdr:rgba(255,255,255,.12)}
 html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--text);font-family:'Space Grotesk',sans-serif;overflow-x:hidden;text-align:justify;background-image:radial-gradient(ellipse 900px 700px at 10% 20%,rgba(124,58,237,.09) 0%,transparent 65%),radial-gradient(ellipse 700px 500px at 90% 10%,rgba(0,229,255,.07) 0%,transparent 55%),radial-gradient(ellipse 800px 600px at 60% 90%,rgba(42,127,255,.08) 0%,transparent 60%),radial-gradient(ellipse 500px 400px at 30% 70%,rgba(0,255,136,.05) 0%,transparent 55%);background-attachment:fixed;contain:none;font-size:clamp(0.9rem, 2vw, 1.05rem)}
 h1,h2,h3{text-wrap:balance}
@@ -87,13 +92,11 @@ nav{position:fixed;top:0;left:0;right:0;z-index:999;padding:.9rem 2rem;display:f
 }
 @keyframes nebFadeIn{to{opacity:1}}
 
-/* aurora replaced by space canvas */50%{transform:translate(40px,-50px) scale(1.15)}}
+/* aurora replaced by space canvas */
 
 /* GRID */
 .grid-ov{position:absolute;inset:0;background-image:linear-gradient(rgba(0,229,255,.055) 1px,transparent 1px),linear-gradient(90deg,rgba(0,229,255,.055) 1px,transparent 1px);background-size:64px 64px;animation:gp 8s ease-in-out infinite;z-index:1;will-change:opacity}
 @keyframes gp{0%,100%{opacity:.2}50%{opacity:.55}}
-
-33%{transform:translate(50px,60px) scale(1.1)}66%{transform:translate(-40px,-30px) scale(.97)}}
 
 /* ══ GLOBAL INTENSE GLOWING UNIVERSE ══ */
 .global-nova-wrap {position:fixed;inset:0;pointer-events:none;z-index:-1;overflow:hidden;background:#03070f}
@@ -183,19 +186,17 @@ section{padding:5rem 2rem}
 /* Removed about-stats-row entirely as per new unified stats banner */
 /* edu grid - HORIZONTAL 4-column */
 .edu-section-label{font-family:'Share Tech Mono',monospace;font-size:.7rem;color:var(--cyan);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.9rem;padding-bottom:.4rem;border-bottom:1px solid rgba(0,229,255,.12);text-align:left}
-.edu-showcase{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}
-.edu-card{position:relative;background:rgba(255,255,255,.042);border:1px solid var(--bdr);border-radius:14px;padding:1.1rem 1rem 1rem;display:flex;flex-direction:column;gap:.55rem;overflow:hidden;cursor:default;transition:all .35s cubic-bezier(.175,.885,.32,1.275);min-height:120px}
-.edu-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,hsl(var(--hue),100%,55%),hsl(var(--hue),80%,70%),transparent);box-shadow:0 0 10px hsla(var(--hue),100%,55%,.4);transition:opacity .3s}
-.edu-card::after{content:'';position:absolute;inset:0;background:linear-gradient(160deg,hsla(var(--hue),100%,50%,.06) 0%,transparent 60%);opacity:0;transition:opacity .3s;pointer-events:none}
-.edu-card:hover{transform:translateY(-5px);border-color:hsla(var(--hue),100%,55%,.35);box-shadow:0 14px 36px rgba(0,0,0,.5),0 0 0 1px hsla(var(--hue),100%,55%,.08)}
-.edu-card:hover::after{opacity:1}
+.edu-showcase{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1.2rem}
+.edu-card{position:relative;background:var(--glass);backdrop-filter:blur(16px) saturate(180%);border:1px solid var(--glass-bdr);border-radius:20px;padding:1.4rem 1.6rem;display:flex;flex-direction:column;gap:.65rem;overflow:hidden;cursor:default;transition:all .45s cubic-bezier(.175,.885,.32,1.275);min-height:140px}
+.edu-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,hsl(var(--hue),100%,55%),hsl(var(--hue),80%,70%),transparent);box-shadow:0 0 15px hsla(var(--hue),100%,55%,.5);transition:opacity .3s}
+.edu-card:hover{transform:translateY(-8px);border-color:hsla(var(--hue),100%,55%,.4);box-shadow:0 20px 45px rgba(0,0,0,.6),0 0 20px hsla(var(--hue),100%,55%,.15)}
 .cert-tag{font-family:'Share Tech Mono',monospace;font-size:.52rem;color:var(--bg);background:hsl(var(--hue),100%,52%);padding:.15rem .45rem;border-radius:4px;font-weight:700;z-index:2;box-shadow:0 0 10px hsla(var(--hue),100%,50%,.45);letter-spacing:.06em;align-self:flex-start;transition:all .3s;width:fit-content}
 .edu-card:hover .cert-tag{box-shadow:0 0 16px hsla(var(--hue),100%,50%,.7);transform:scale(1.04)}
 .ec-icon{font-size:1.5rem;line-height:1;z-index:2}
 .ec-info{flex:1;z-index:2}
 .ec-title{font-family:'Syne',sans-serif;font-size:.88rem;font-weight:800;color:var(--text);margin-bottom:.2rem;text-align:left;line-height:1.25}
 .ec-sub{font-size:.72rem;color:var(--muted);line-height:1.45;text-align:left}
-.ec-year{display:inline-block;font-family:'Share Tech Mono',monospace;font-size:.6rem;background:hsla(var(--hue),100%,50%,.12);color:hsl(var(--hue),100%,68%);padding:.18rem .55rem;border-radius:100px;letter-spacing:.04em;border:1px solid hsla(var(--hue),100%,50%,.25);margin-top:.3rem;width:fit-content}
+.ec-year{display:inline-block;font-family:'Share Tech Mono',monospace;font-size:.6rem;background:hsla(var(--hue),100%,50%,.1);color:hsl(var(--hue),100%,68%);padding:.25rem .75rem;border-radius:100px;letter-spacing:.04em;border:1px solid hsla(var(--hue),100%,50%,.2);margin-top:.3rem;width:fit-content}
 /* tools */
 .tools-section-label{font-family:'Share Tech Mono',monospace;font-size:.7rem;color:var(--cyan);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.75rem;padding-bottom:.4rem;border-bottom:1px solid rgba(0,229,255,.12);text-align:left}
 .tools-grid{display:flex;flex-wrap:wrap;gap:.45rem}
@@ -234,14 +235,11 @@ section{padding:5rem 2rem}
 .sk-spine-cursor{position:absolute;left:50%;width:14px;height:14px;border-radius:50%;background:var(--cyan);box-shadow:0 0 16px var(--cyan),0 0 32px var(--cyan);transform:translate(-50%,-50%);pointer-events:none;transition:top .08s ease;opacity:0}
 @keyframes sg{0%{top:-50px;opacity:0}15%{opacity:.5}85%{opacity:.3}100%{top:110%;opacity:0}}
 
-.sk-pairs-wrap{max-width:1000px;margin:0 auto;position:relative;z-index:3}
-.sk-pair{display:grid;grid-template-columns:1fr 64px 1fr;align-items:start;gap:0;margin-bottom:1.8rem}
-.sk-slot{display:flex;flex-direction:column;gap:1rem}
-.sk-slot.left{align-items:flex-end;padding-right:1.5rem}
-.sk-slot.right{align-items:flex-start;padding-left:1.5rem}
+.sk-bento-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:1.5rem;max-width:1200px;margin:0 auto;position:relative;z-index:3}
+.sk-slot{display:contents}
 .sk-center-col{display:flex;flex-direction:column;align-items:center;gap:0;z-index:4;padding-top:.4rem}
-.sk-pair-reveal{opacity:0;transform:translateY(38px);transition:opacity .65s ease,transform .65s ease}
-.sk-pair-reveal.show{opacity:1;transform:none}
+.sk-card-reveal{opacity:0;transform:translateY(30px);transition:all .6s cubic-bezier(.165,.84,.44,1)}
+.sk-card-reveal.show{opacity:1;transform:translateY(0)}
 
 /* skill node */
 .snode-wrap{position:relative;width:56px;height:56px;cursor:default}
@@ -255,7 +253,7 @@ section{padding:5rem 2rem}
 .snode-connector{width:1px;flex:1;min-height:1rem;margin:.2rem 0}
 
 /* skill card */
-.sk-card{background:rgba(255,255,255,.042);border-radius:16px;padding:1.1rem 1.3rem;position:relative;overflow:hidden;width:100%;max-width:420px;border:1px solid var(--bdr);cursor:pointer;transition:transform .35s,box-shadow .35s,border-color .3s}
+.sk-card{background:var(--glass);backdrop-filter:blur(16px) saturate(160%);border-radius:20px;padding:1.4rem 1.6rem;position:relative;overflow:hidden;width:100%;max-width:440px;border:1px solid var(--glass-bdr);cursor:pointer;transition:transform .4s cubic-bezier(.175,.885,.32,1.275),box-shadow .4s,border-color .3s}
 .sk-card:hover{transform:translateY(-4px)}
 .sk-card.active{transform:translateY(-4px)}
 .sk-shine{position:absolute;top:-60%;left:-60%;width:220%;height:220%;background:conic-gradient(transparent 25%,rgba(255,255,255,.02) 50%,transparent 75%);animation:csh 7s linear infinite;pointer-events:none}
@@ -304,7 +302,7 @@ section{padding:5rem 2rem}
 /* PROJECTS */
 #projects{background:var(--bg2)}
 .projects-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1.5rem}
-.proj-card{background:rgba(8,14,28,.85);border:1px solid var(--bdr);border-radius:14px;overflow:hidden;transition:all .35s;cursor:pointer;position:relative}
+.proj-card{background:var(--glass);backdrop-filter:blur(24px) saturate(200%);border:1px solid var(--glass-bdr);border-radius:24px;overflow:hidden;transition:all .5s cubic-bezier(.175,.885,.32,1.275);cursor:pointer;position:relative;box-shadow:0 10px 30px rgba(0,0,0,.3)}
 .proj-card:hover{transform:translateY(-5px);border-color:rgba(0,229,255,.2);box-shadow:0 20px 50px rgba(0,0,0,.5)}
 .proj-thumb{height:160px;display:flex;align-items:center;justify-content:center;font-size:2.6rem;position:relative;overflow:hidden}
 .proj-thumb::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,transparent 50%,rgba(7,13,26,.95))}
@@ -357,7 +355,7 @@ section{padding:5rem 2rem}
 .enode-year{font-family:'Share Tech Mono',monospace;font-size:.58rem;color:var(--muted);text-align:center;margin-top:.3rem}
 .enode-connector{width:1px;flex:1;min-height:1rem;margin:.2rem 0}
 /* exp card */
-.exp-card{background:var(--card);backdrop-filter:blur(20px);border-radius:16px;padding:1.1rem 1.3rem;position:relative;overflow:hidden;width:100%;max-width:420px;border:1px solid var(--bdr);cursor:pointer;transition:transform .35s,box-shadow .35s,border-color .3s}
+.exp-card{background:var(--glass);backdrop-filter:blur(16px) saturate(160%);border-radius:20px;padding:1.4rem 1.6rem;position:relative;overflow:hidden;width:100%;max-width:440px;border:1px solid var(--glass-bdr);cursor:pointer;transition:transform .4s cubic-bezier(.175,.885,.32,1.275),box-shadow .4s,border-color .3s}
 .exp-card:hover{transform:translateY(-4px)}
 .exp-card.active{transform:translateY(-4px)}
 .exp-card-shine{position:absolute;top:-60%;left:-60%;width:220%;height:220%;background:conic-gradient(transparent 25%,rgba(255,255,255,.02) 50%,transparent 75%);animation:csh 7s linear infinite;pointer-events:none}
@@ -578,8 +576,7 @@ footer{background:rgba(4,8,18,.82);border-top:1px solid rgba(255,255,255,.04);pa
   .ts-item:last-child{grid-column:auto}
 }
 </style>
-  <!-- EmailJS SDK -->
-  <script defer src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <!-- EmailJS SDK removed (using REST API) -->
 </head>
 <body>
 <div class="global-nova-wrap">
@@ -591,7 +588,10 @@ footer{background:rgba(4,8,18,.82);border-top:1px solid rgba(255,255,255,.04);pa
 <canvas id="spaceCanvas"></canvas>
 <div id="prog"></div>
 <nav>
-  <a href="#hero" class="logo">MP.dev</a>
+  <a href="#hero" class="logo" style="display: flex; align-items: center; gap: 0.7rem; background: none; -webkit-text-fill-color: initial; transition: all 0.3s ease;">
+    <img src="favicon-96x96.png" alt="MP Logo" style="width: 36px; height: 36px; filter: drop-shadow(0 0 10px var(--cyan)); transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);">
+    <span style="background: linear-gradient(135deg,var(--cyan),var(--blue2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 800; letter-spacing: -0.02em;">MP.dev</span>
+  </a>
   <ul class="nav-links">
     <li><a href="#about">About</a></li>
     <li><a href="#skills">Skills</a></li>
@@ -794,16 +794,11 @@ footer{background:rgba(4,8,18,.82);border-top:1px solid rgba(255,255,255,.04);pa
   <div class="sk-stars" id="skStars"></div>
   <canvas class="sk-hex" id="skHex"></canvas>
   <div class="sk-scan"></div>
-  <div class="sk-spine-wrap">
-    <div class="sk-spine-track"></div>
-    <div class="sk-spine-fill" id="skSpineFill"></div>
-    <div class="sk-spine-ghost"></div>
-  </div>
   <div class="container" style="position:relative;z-index:3">
     <div class="sec-label">// tech_stack.init()</div>
     <h2 class="sec-title">My <span>Tech Arsenal</span></h2>
     <p class="sec-desc">Click any skill card to expand details — every skill earned through real shipped code and production projects.</p>
-    <div class="sk-pairs-wrap" id="skPairs"></div>
+    <div class="sk-bento-grid reveal" id="skGrid"></div>
   </div>
 </section>
 
@@ -925,74 +920,46 @@ const skillPairs=[
    R:{icon:'canva',ac:'#00e5ff',cat:'Leadership',name:'Leadership & Agile',lvl:'Expert · 96%',tags:['Team Lead','Agile','Scrum','HACK KRMU 5.0','50+ Devs Mentored','Campus Ambassador'],use:'Tech Team Lead for HACK KRMU 5.0 (54hr, ₹5L prize), led 50+ volunteers; Campus Ambassador growing dev community 40%+ across 3 departments.',bar:96}}
 ];
 
-const skPairsEl=document.getElementById('skPairs');
-skillPairs.forEach((pair,i)=>{
-  const pairDiv=document.createElement('div');
-  pairDiv.className='sk-pair sk-pair-reveal';
-  pairDiv.style.transitionDelay=(i*.12)+'s';
+const skGridEl=document.getElementById('skGrid');
 
-  function makeSkCard(sk,uid){
-    const cid='skc'+uid;
-    const rg=`conic-gradient(${sk.ac},${sk.ac}44,transparent,${sk.ac}22,${sk.ac})`;
-    return `
-<div class="sk-card" id="${cid}" style="border-color:${sk.ac}1c" onclick="toggleSkCard('${cid}','${sk.ac}')">
+function makeSkCard(sk,uid){
+  const cid='skc'+uid;
+  return `<div class="sk-card" id="${cid}" style="border-color:${sk.ac}1c" onclick="toggleSkCard('${cid}','${sk.ac}')">
   <div class="sk-shine"></div>
   <div class="sk-topbar" style="background:linear-gradient(90deg,transparent,${sk.ac},transparent)"></div>
-  <div class="sk-brkt bktl" style="border-color:${sk.ac}42"></div>
-  <div class="sk-brkt bktr" style="border-color:${sk.ac}42"></div>
-  <div class="sk-brkt bkbl" style="border-color:${sk.ac}1e"></div>
-  <div class="sk-brkt bkbr" style="border-color:${sk.ac}1e"></div>
-  <div class="sk-pars" id="skp${uid}"></div>
-  <div class="sk-glow" id="skg${uid}"></div>
+  <div class="sk-brkt bktl" style="border-color:${sk.ac}42"></div><div class="sk-brkt bktr" style="border-color:${sk.ac}42"></div>
+  <div class="sk-brkt bkbl" style="border-color:${sk.ac}1e"></div><div class="sk-brkt bkbr" style="border-color:${sk.ac}1e"></div>
+  <div class="sk-pars" id="skp${uid}"></div><div class="sk-glow" id="skg${uid}"></div>
   <div class="skh">
     <div class="skh-icon" style="background:${sk.ac}15;box-shadow:0 0 14px ${sk.ac}20">${ICO[sk.icon]||ICO.react}</div>
-    <div class="skh-info">
-      <div class="skh-name">${sk.name}</div>
-      <div class="skh-cat" style="color:${sk.ac}">${sk.cat}</div>
-    </div>
-    <div class="skh-right">
-      <span class="sk-lvl" style="background:${sk.ac}18;border:1px solid ${sk.ac}38;color:${sk.ac}">${sk.lvl}</span>
-      <span class="sk-toggle">▼</span>
-    </div>
+    <div class="skh-info"><div class="skh-name">${sk.name}</div><div class="skh-cat" style="color:${sk.ac}">${sk.cat}</div></div>
+    <div class="skh-right"><span class="sk-lvl" style="background:${sk.ac}18;border:1px solid ${sk.ac}38;color:${sk.ac}">${sk.lvl}</span><span class="sk-toggle">▼</span></div>
   </div>
   <div class="sk-hint">click to expand</div>
   <div class="sk-body">
-    <div class="sk-bar-row">
-      <div class="sk-bar-top"><span class="sk-bar-lbl">Proficiency</span><span class="sk-bar-pct" style="color:${sk.ac}">${sk.bar}%</span></div>
-      <div class="sk-bar-track"><div class="sk-bar-fill" data-w="${sk.bar}" style="background:linear-gradient(90deg,${sk.ac}55,${sk.ac});box-shadow:0 0 8px ${sk.ac}50"></div></div>
-    </div>
+    <div class="sk-bar-row"><div class="sk-bar-top"><span class="sk-bar-lbl">Proficiency</span><span class="sk-bar-pct" style="color:${sk.ac}">${sk.bar}%</span></div><div class="sk-bar-track"><div class="sk-bar-fill" data-w="${sk.bar}" style="background:linear-gradient(90deg,${sk.ac}55,${sk.ac});box-shadow:0 0 8px ${sk.ac}50"></div></div></div>
     <div class="sk-tags">${sk.tags.map(t=>`<span class="sk-tag" style="color:${sk.ac};border-color:${sk.ac}28;background:${sk.ac}0d">${t}</span>`).join('')}</div>
     <div class="sk-uses">${sk.use}</div>
   </div>
 </div>`;
-  }
+}
 
-  function makeSkNode(sk){
-    const rg=`conic-gradient(${sk.ac},${sk.ac}44,transparent,${sk.ac}22,${sk.ac})`;
-    return `<div class="snode-wrap"><div class="snode-ring" style="background:${rg}"></div><div class="snode-core"></div><div class="snode-ping" style="border:1.5px solid ${sk.ac}38"></div><div class="snode-emoji" style="font-size:1.2rem">${ICO[sk.icon]?'<svg style="width:22px;height:22px">'+ICO[sk.icon].match(/<svg[^>]*>([\s\S]*)<\/svg>/)?.[1]+'</svg>':'⚡'}</div></div><div class="snode-year">${sk.cat.split('/')[0].trim()}</div>`;
-  }
+const allSkills=[];
+skillPairs.forEach(p=>{
+  allSkills.push(p.L);
+  if(p.R)allSkills.push(p.R);
+});
 
-  const Lcard=makeSkCard(pair.L, i+'L');
-  const Rcard=pair.R?makeSkCard(pair.R, i+'R'):'';
-  const connColor=pair.R?`linear-gradient(to bottom,${pair.L.ac},${pair.R.ac})`:pair.L.ac;
-  const Lring=`conic-gradient(${pair.L.ac},${pair.L.ac}44,transparent,${pair.L.ac}22,${pair.L.ac})`;
-  const Rring=pair.R?`conic-gradient(${pair.R.ac},${pair.R.ac}44,transparent,${pair.R.ac}22,${pair.R.ac})`:'';
+allSkills.forEach((sk,i)=>{
+  const cardHtml=makeSkCard(sk, i);
+  const wrapper=document.createElement('div');
+  wrapper.className='sk-card-reveal';
+  wrapper.style.transitionDelay=(i*.08)+'s';
+  wrapper.innerHTML=cardHtml;
+  skGridEl.appendChild(wrapper);
 
-  pairDiv.innerHTML=`
-<div class="sk-slot left">${Lcard}</div>
-<div class="sk-center-col">
-  <div class="snode-wrap"><div class="snode-ring" style="background:${Lring}"></div><div class="snode-core"></div><div class="snode-ping" style="border:1.5px solid ${pair.L.ac}38"></div><div class="snode-emoji">${ICO[pair.L.icon]?'<svg viewBox="0 0 128 128" style="width:22px;height:22px">'+ICO[pair.L.icon].match(/<svg[^>]*>([\s\S]*)<\/svg>/)?.[1]+'</svg>':'⚡'}</div></div>
-  <div class="snode-year">${pair.L.cat.split('/')[0].trim()}</div>
-  ${pair.R?`<div class="snode-connector" style="background:${connColor};opacity:.4"></div>
-  <div class="snode-wrap"><div class="snode-ring" style="background:${Rring}"></div><div class="snode-core"></div><div class="snode-ping" style="border:1.5px solid ${pair.R.ac}38"></div><div class="snode-emoji">${ICO[pair.R.icon]?'<svg viewBox="0 0 128 128" style="width:22px;height:22px">'+ICO[pair.R.icon].match(/<svg[^>]*>([\s\S]*)<\/svg>/)?.[1]+'</svg>':'⚡'}</div></div>
-  <div class="snode-year">${pair.R.cat.split('/')[0].trim()}</div>`:''}
-</div>
-<div class="sk-slot right ${pair.R?'':'empty'}" style="${pair.R?'':'visibility:hidden'}">${Rcard}</div>`;
-
-  skPairsEl.appendChild(pairDiv);
-
-  [pair.L,pair.R].filter(Boolean).forEach((sk,ki)=>{
-    const uid=i+(ki===0?'L':'R');
+  setTimeout(()=>{
+    const uid=i;
     const ce=document.getElementById('skc'+uid);
     const ge=document.getElementById('skg'+uid);
     const pe=document.getElementById('skp'+uid);
@@ -1000,16 +967,16 @@ skillPairs.forEach((pair,i)=>{
     for(let k=0;k<5;k++){const p=document.createElement('div');p.className='spar';p.style.cssText=`left:${8+Math.random()*84}%;background:${sk.ac};opacity:0;width:2px;height:2px;border-radius:50%;position:absolute;animation:cpr linear infinite;animation-duration:${2.8+Math.random()*2.6}s;animation-delay:${Math.random()*4.5}s;--dx:${Math.random()*22-11}px`;pe.appendChild(p);}
     ce.addEventListener('mousemove',ev=>{
       if(ce.ticking)return;
-      const r=ce.getBoundingClientRect();
       ce.ticking=true;
       requestAnimationFrame(()=>{
-        ge.style.background=`radial-gradient(ellipse 160px 110px at ${((ev.clientX-r.left)/r.width*100).toFixed(1)}% ${((ev.clientY-r.top)/r.height*100).toFixed(1)}%,${sk.ac}0f,transparent)`;
+        const r=ce.getBoundingClientRect();
+        ge.style.background=`radial-gradient(ellipse 160px 110px at ${((ev.clientX-r.left)/r.width*100).toFixed(1)}% ${((ev.clientY-r.top)/r.height*100).toFixed(1)}%,${sk.ac}15,transparent)`;
         ge.style.opacity='1';
         ce.ticking=false;
       });
     });
     ce.addEventListener('mouseleave',()=>{ge.style.opacity='0';});
-  });
+  },100);
 });
 
 function toggleSkCard(id,ac){
@@ -1030,9 +997,9 @@ const pgrid=document.getElementById('pgrid');
 projs.forEach(p=>{
   const emojiHtml=p.emojiSt?`<span style="${p.emojiSt};position:relative;z-index:1">${p.emoji}</span>`:p.emoji;
   pgrid.innerHTML+=`<div class="proj-card${p.feat?' featured':''}" onclick="om(${p.id})">
-    <div class="proj-thumb" style="background:${p.bg}">${emojiHtml}<div class="proj-overlay"><div class="proj-badges">${p.badges.map(b=>`<span class="bdg">${b}</span>`).join('')}</div></div></div>
-    <div class="proj-body"><div class="proj-title">${p.title}</div><div class="proj-desc">${p.desc}</div><div class="proj-metric">${p.metric}</div>
-    <div class="proj-actions"><span class="pbtn gh" onclick="event.stopPropagation();om(${p.id})">Case Study</span><a href="${p.gh}" class="pbtn lv" onclick="event.stopPropagation()">GitHub →</a></div></div></div>`;
+    <div class="proj-thumb" style="background:${p.bg};transition:transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);">${emojiHtml}<div class="proj-overlay"><div class="proj-badges">${p.badges.map(b=>`<span class="bdg">${b}</span>`).join('')}</div></div></div>
+    <div class="proj-body"><div class="proj-title" style="font-family:'Syne',sans-serif;font-weight:800;">${p.title}</div><div class="proj-desc">${p.desc}</div><div class="proj-metric">${p.metric}</div>
+    <div class="proj-actions"><span class="pbtn gh" onclick="event.stopPropagation();om(${p.id})">Case Study</span><a href="${p.gh}" class="pbtn lv" onclick="event.stopPropagation()" target="_blank">GitHub →</a></div></div></div>`;
 });
 function om(id){const p=projs[id];document.getElementById('mc').innerHTML=`<h3 style="font-family:Syne,sans-serif;font-size:1.35rem;font-weight:800;margin-bottom:1.4rem;text-align:left">${p.title}</h3><div class="ms"><h4>🎯 Challenge</h4><p>${p.cs.ch}</p></div><div class="ms"><h4>⚡ Solution</h4><p>${p.cs.sol}</p></div><div class="ms"><h4>📈 Impact</h4><p>${p.cs.imp}</p><div class="mr">${p.cs.chips.map(c=>`<span class="mc">${c}</span>`).join('')}</div></div>`;document.getElementById('mo').classList.add('open');}
 function cm(){document.getElementById('mo').classList.remove('open')}
@@ -1057,8 +1024,8 @@ for(let i=0;i<jobs.length;i+=2){
   function mkC(j,idx){
     const cid='ec'+idx;
     const rg=`conic-gradient(${j.ac},${j.ac}44,transparent,${j.ac}22,${j.ac})`;
-    return `<div class="exp-card" id="${cid}" style="border-color:${j.ac}1c" onclick="tgExp('${cid}','${j.ac}')">
-  <div class="exp-card-shine"></div>
+    return `<div class="exp-card" id="${cid}" style="background:var(--glass);backdrop-filter:blur(16px);border:1px solid var(--glass-bdr);border-radius:20px;" onclick="tgExp('${cid}','${j.ac}')">
+  <div class="exp-card-shine" style="background:radial-gradient(circle at 50% 0%,${j.ac}22,transparent 70%)"></div>
   <div class="exp-card-topbar" style="background:linear-gradient(90deg,transparent,${j.ac},transparent)"></div>
   <div class="exp-brkt bktl" style="border-color:${j.ac}42"></div><div class="exp-brkt bktr" style="border-color:${j.ac}42"></div>
   <div class="exp-brkt bkbl" style="border-color:${j.ac}1e"></div><div class="exp-brkt bkbr" style="border-color:${j.ac}1e"></div>
@@ -1094,9 +1061,9 @@ for(let i=0;i<jobs.length;i+=2){
     for(let k=0;k<5;k++){const p=document.createElement('div');p.className='ecp';p.style.cssText=`left:${8+Math.random()*84}%;background:${j.ac};width:2px;height:2px;border-radius:50%;position:absolute;opacity:0;animation:cpr linear infinite;animation-duration:${2.8+Math.random()*2.6}s;animation-delay:${Math.random()*4.5}s;--dx:${Math.random()*22-11}px`;pw.appendChild(p);}
     ce.addEventListener('mousemove',ev=>{
       if(ce.ticking)return;
-      const r=ce.getBoundingClientRect();
       ce.ticking=true;
       requestAnimationFrame(()=>{
+        const r=ce.getBoundingClientRect();
         ge.style.background=`radial-gradient(ellipse 160px 110px at ${((ev.clientX-r.left)/r.width*100).toFixed(1)}% ${((ev.clientY-r.top)/r.height*100).toFixed(1)}%,${j.ac}0f,transparent)`;
         ge.style.opacity='1';
         ce.ticking=false;
@@ -1112,44 +1079,69 @@ const expSpine=document.getElementById('expSpineFill');
 const skSpine=document.getElementById('skSpineFill');
 const expSec=document.getElementById('experience');
 const skSec=document.getElementById('skills');
+const progEl=document.getElementById('prog');
+const bttEl=document.getElementById('btt');
 let _scrollTicking=false;
+
+let expTopRaw=0, expH=0, skTopRaw=0, skH=0, docH=0;
+function updateScrollMetrics() {
+  const scrollY = window.scrollY || document.documentElement.scrollTop;
+  if(expSec) {
+    const r = expSec.getBoundingClientRect();
+    expTopRaw = r.top + scrollY;
+    expH = r.height;
+  }
+  if(skSec) {
+    const r = skSec.getBoundingClientRect();
+    skTopRaw = r.top + scrollY;
+    skH = r.height;
+  }
+  docH = document.documentElement.scrollHeight - window.innerHeight;
+}
+window.addEventListener('resize', updateScrollMetrics, {passive:true});
+setTimeout(updateScrollMetrics, 300);
+
+const revealObserver = new IntersectionObserver((entries, obs) => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting) {
+      const el = entry.target;
+      if(el.classList.contains('reveal')) el.classList.add('visible');
+      else el.classList.add('show');
+      obs.unobserve(el);
+    }
+  });
+}, { rootMargin: "0px 0px -10% 0px" });
+
+setTimeout(() => {
+  document.querySelectorAll('.exp-pair-reveal, .sk-card-reveal, .reveal').forEach(el => {
+    revealObserver.observe(el);
+  });
+}, 100);
 
 function onScroll(){
   if(_scrollTicking)return;
-  
-  const s=document.documentElement.scrollTop,h=document.documentElement.scrollHeight-window.innerHeight;
-  const vh=window.innerHeight;
-  
-  // DOM Reads (Outside rAF!)
-  const expTop = expSec ? expSec.getBoundingClientRect().top : null;
-  const expH = expSec ? expSec.getBoundingClientRect().height : null;
-  const skTop = skSec ? skSec.getBoundingClientRect().top : null;
-  const skH = skSec ? skSec.getBoundingClientRect().height : null;
-  
-  const reveals = [];
-  document.querySelectorAll('.exp-pair-reveal:not(.show),.sk-pair-reveal:not(.show),.reveal:not(.visible)').forEach(el=>{
-    if(el.getBoundingClientRect().top < vh*.88) reveals.push(el);
-  });
-
   _scrollTicking=true;
+  
+  const s = window.scrollY || document.documentElement.scrollTop;
+  const vh = window.innerHeight;
+  
   requestAnimationFrame(()=>{
-    // DOM Writes
-    document.getElementById('prog').style.width=(s/h*100)+'%';
-    document.getElementById('btt').classList[s>300?'add':'remove']('vis');
+    if(docH > 0) progEl.style.width=(s/docH*100)+'%';
+    bttEl.classList[s>300?'add':'remove']('vis');
     
-    if(expSec && expH){expSpine.style.height=(Math.max(0,Math.min(1,(-expTop+vh*.65)/expH))*100)+'%';}
-    if(skSec && skH){skSpine.style.height=(Math.max(0,Math.min(1,(-skTop+vh*.65)/skH))*100)+'%';}
-    
-    reveals.forEach(el=>{
-      if(el.classList.contains('reveal')) el.classList.add('visible');
-      else el.classList.add('show');
-    });
-    
+    if(expSec && expH){
+      const expTop = expTopRaw - s;
+      expSpine.style.height=(Math.max(0,Math.min(1,(-expTop+vh*.65)/expH))*100)+'%';
+    }
+    if(skSec && skH){
+      const skTop = skTopRaw - s;
+      skSpine.style.height=(Math.max(0,Math.min(1,(-skTop+vh*.65)/skH))*100)+'%';
+    }
     _scrollTicking=false;
   });
 }
 window.addEventListener('scroll',onScroll,{passive:true});
-setTimeout(onScroll,200);
+setTimeout(() => { updateScrollMetrics(); onScroll(); }, 350);
 
 /* TYPING */
 const lines=['Building startups and projects on Fiverr and Upwork','Ambassador Center of Excellence Cloud Computing','CSO at eOzka'];
@@ -1563,14 +1555,14 @@ window.addEventListener('resize',()=>{drawHex('expHex');drawHex('skHex');});
     if (now - lastExpMove < 16) return; // ~60fps throttle
     lastExpMove = now;
     
-    // READS
-    const expSecRect = expSection ? expSection.getBoundingClientRect() : null;
-    const expSpRect = expSpineWrap ? expSpineWrap.getBoundingClientRect() : null;
-    const skSecRect = skSection ? skSection.getBoundingClientRect() : null;
-    const skSpRect = skSpineWrap ? skSpineWrap.getBoundingClientRect() : null;
-    
-    // WRITES
     requestAnimationFrame(() => {
+      // READS inside rAF
+      const expSecRect = expSection ? expSection.getBoundingClientRect() : null;
+      const expSpRect = expSpineWrap ? expSpineWrap.getBoundingClientRect() : null;
+      const skSecRect = skSection ? skSection.getBoundingClientRect() : null;
+      const skSpRect = skSpineWrap ? skSpineWrap.getBoundingClientRect() : null;
+      
+      // WRITES
       if(expCursor && expSecRect && expSpRect) {
         const near = Math.abs(ev.clientX - (expSpRect.left + expSpRect.width/2)) < 160;
         if(ev.clientY >= expSecRect.top && ev.clientY <= expSecRect.bottom && near){
