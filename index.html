@@ -156,7 +156,9 @@ nav{position:fixed;top:0;left:0;right:0;z-index:999;padding:.9rem 2rem;display:f
 .btn-o{background:rgba(0,229,255,.06);color:var(--cyan);border:1px solid rgba(0,229,255,.3);padding:.75rem 1.8rem;border-radius:8px;font-size:.88rem;font-weight:600;cursor:pointer;text-decoration:none;transition:all .25s}
 .btn-o:hover{background:rgba(0,229,255,.12);transform:translateY(-3px)}
 .tech-stats-banner{display:flex;justify-content:space-evenly;align-items:center;width:100%;max-width:850px;margin:3.5rem auto 0;padding:1.5rem 0;background:linear-gradient(90deg,rgba(0,229,255,.05),rgba(124,58,237,.12),rgba(0,229,255,.05));border-top:1px solid rgba(0,229,255,.15);border-bottom:1px solid rgba(124,58,237,.2);backdrop-filter:blur(6px);contain:content}
-.ts-item{text-align:center;flex:1}
+.ts-link{text-decoration:none;color:inherit;flex:1;text-align:center;display:block}
+.ts-item{text-align:center;flex:1;transition:transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)}
+.ts-link:hover .ts-item{transform:translateY(-5px)}
 .ts-val{font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;background:linear-gradient(135deg,var(--cyan),var(--blue2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-shadow:0 0 15px rgba(0,229,255,.4);line-height:1}
 .ts-lbl{font-family:'Share Tech Mono',monospace;font-size:.7rem;color:var(--text);opacity:0.75;letter-spacing:.15em;text-transform:uppercase;margin-top:.4rem;text-shadow:0 0 10px rgba(255,255,255,0.1)}
 
@@ -826,9 +828,15 @@ footer{background:rgba(4,8,18,.82);border-top:1px solid rgba(255,255,255,.04);pa
       <a href="mailto:prakashmrinal9@gmail.com" class="btn-o">💼 Hire Me</a>
     </div>
     <div class="tech-stats-banner">
-      <div class="ts-item"><div class="ts-val" id="expYears">3+</div><div class="ts-lbl">Years of Experience</div></div>
-      <div class="ts-item"><div class="ts-val" id="liveProjects">5+</div><div class="ts-lbl">Live Projects</div></div>
-      <div class="ts-item"><div class="ts-val" id="liveLnFollowers">...</div><div class="ts-lbl">LinkedIn Followers</div></div>
+      <a href="#experience" class="ts-link">
+        <div class="ts-item"><div class="ts-val" id="expYears">3+</div><div class="ts-lbl">Years of Experience</div></div>
+      </a>
+      <a href="#projects" class="ts-link">
+        <div class="ts-item"><div class="ts-val" id="liveProjects">5+</div><div class="ts-lbl">Live Projects</div></div>
+      </a>
+      <a href="https://www.linkedin.com/in/mrinal-prakash-fullstackdeveloper" target="_blank" rel="noopener noreferrer" class="ts-link">
+        <div class="ts-item"><div class="ts-val" id="liveLnFollowers">...</div><div class="ts-lbl">LinkedIn Followers</div></div>
+      </a>
     </div>
   </div>
 </section>
