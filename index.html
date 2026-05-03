@@ -10,8 +10,9 @@
 <meta property="og:type" content="website">
 <link rel="icon" type="image/png" href="favicon-32x32.png" sizes="32x32" />
 <link rel="icon" type="image/png" href="favicon-96x96.png" sizes="96x96" />
+<link rel="icon" type="image/png" href="favicon-512x512.png" sizes="512x512" />
 <link rel="shortcut icon" href="favicon-32x32.png" />
-<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="favicon-512x512.png" />
 <meta name="apple-mobile-web-app-title" content="MP Portfolio" />
 <link rel="manifest" href="site.webmanifest" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -230,7 +231,7 @@ section{padding:5rem 2rem}
 /* skills spine */
 .sk-spine-wrap{position:absolute;left:50%;top:260px;bottom:60px;width:3px;transform:translateX(-50%);z-index:2}
 .sk-spine-track{position:absolute;inset:0;background:linear-gradient(to bottom,transparent,rgba(0,229,255,.1) 5%,rgba(0,229,255,.1) 95%,transparent)}
-.sk-spine-fill{position:absolute;top:0;left:0;right:0;height:0;background:linear-gradient(to bottom,#2a7fff,#00e5ff,#a78bfa,#00ff88,#ffaa00);transition:height 2.5s ease;box-shadow:0 0 14px rgba(0,229,255,.4)}
+.sk-spine-fill{position:absolute;top:0;left:0;right:0;height:0;background:linear-gradient(to bottom,#2a7fff,#00e5ff,#a78bfa,#00ff88,#ffaa00);transition:height 0.35s cubic-bezier(0.25,0.46,0.45,0.94);box-shadow:0 0 14px rgba(0,229,255,.4)}
 .sk-spine-ghost{position:absolute;left:0;right:0;height:50px;background:linear-gradient(to bottom,transparent,rgba(255,255,255,.7),transparent);animation:sg 3.5s ease-in-out infinite;opacity:0}
 .sk-spine-cursor{position:absolute;left:50%;width:14px;height:14px;border-radius:50%;background:var(--cyan);box-shadow:0 0 16px var(--cyan),0 0 32px var(--cyan);transform:translate(-50%,-50%);pointer-events:none;transition:top .08s ease;opacity:0}
 @keyframes sg{0%{top:-50px;opacity:0}15%{opacity:.5}85%{opacity:.3}100%{top:110%;opacity:0}}
@@ -332,16 +333,16 @@ section{padding:5rem 2rem}
 .exp-scan{position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,229,255,.012) 3px,rgba(0,229,255,.012) 4px);pointer-events:none}
 .exp-spine-wrap{position:absolute;left:50%;top:230px;bottom:60px;width:3px;transform:translateX(-50%);z-index:2}
 .exp-spine-track{position:absolute;inset:0;background:linear-gradient(to bottom,transparent,rgba(0,229,255,.1) 5%,rgba(0,229,255,.1) 95%,transparent)}
-.exp-spine-fill{position:absolute;top:0;left:0;right:0;height:0;background:linear-gradient(to bottom,#00e5ff,#2a7fff,#a78bfa,#ff6b6b,#ffaa00,#00ff88,#38bdf8,#fb923c,#4ade80);transition:height 2.5s ease;box-shadow:0 0 14px rgba(0,229,255,.4)}
-.exp-spine-ghost{position:absolute;left:0;right:0;height:50px;background:linear-gradient(to bottom,transparent,rgba(255,255,255,.7),transparent);animation:sg 3.5s ease-in-out infinite;opacity:0}
+.exp-spine-fill{position:absolute;top:0;left:0;right:0;height:0;background:linear-gradient(to bottom,#00e5ff,#2a7fff,#a78bfa,#ff6b6b,#ffaa00,#00ff88,#38bdf8,#fb923c,#4ade80);transition:height 0.35s cubic-bezier(0.25,0.46,0.45,0.94);box-shadow:0 0 14px rgba(0,229,255,.4)}
+.exp-spine-ghost{position:absolute;left:0;right:0;height:70px;background:linear-gradient(to bottom,transparent 0%,rgba(0,229,255,.7) 40%,rgba(255,255,255,.9) 55%,rgba(0,229,255,.7) 70%,transparent 100%);animation:sg 3.5s ease-in-out infinite;opacity:0;pointer-events:none;border-radius:4px}
 .exp-pairs-wrap{max-width:1000px;margin:0 auto;position:relative;z-index:3}
 .exp-pair{display:grid;grid-template-columns:1fr 64px 1fr;align-items:start;gap:0;margin-bottom:1.8rem}
 .exp-slot{display:flex;flex-direction:column;gap:1rem}
 .exp-slot.left{align-items:flex-end;padding-right:1.5rem}
 .exp-slot.right{align-items:flex-start;padding-left:1.5rem}
 .exp-center-col{display:flex;flex-direction:column;align-items:center;gap:0;z-index:4;padding-top:.4rem}
-.exp-pair-reveal{opacity:0;transform:translateY(38px);transition:opacity .65s ease,transform .65s ease}
-.exp-pair-reveal.show{opacity:1;transform:none}
+.exp-pair-reveal{opacity:0;transition:opacity .6s ease,transform .6s cubic-bezier(0.22,1,0.36,1)}
+.exp-pair-reveal.show{opacity:1;}
 /* exp node */
 .enode-wrap{position:relative;width:56px;height:56px;cursor:pointer}
 .enode-emoji{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:1.25rem;z-index:3;transition:transform .3s}
@@ -575,6 +576,195 @@ footer{background:rgba(4,8,18,.82);border-top:1px solid rgba(255,255,255,.04);pa
   .tech-stats-banner{grid-template-columns:1fr}
   .ts-item:last-child{grid-column:auto}
 }
+
+/* ═══ SPINE FILL PULSE ANIMATION ═══ */
+@keyframes spinePulse {
+  0%,100% {
+    box-shadow: 0 0 10px rgba(0,229,255,0.35), 0 0 20px rgba(42,127,255,0.2);
+    filter: brightness(1);
+  }
+  50% {
+    box-shadow: 0 0 22px rgba(0,229,255,0.8), 0 0 44px rgba(42,127,255,0.45), 0 0 70px rgba(167,139,250,0.25);
+    filter: brightness(1.35);
+  }
+}
+.exp-spine-fill {
+  animation: spinePulse 2.5s ease-in-out infinite !important;
+}
+
+/* Ghost shimmer — active + visible once fill starts */
+@keyframes sg {
+  0%   { top: -60px; opacity: 0; }
+  10%  { opacity: 1; }
+  90%  { opacity: 1; }
+  100% { top: calc(var(--fill-h, 100%)); opacity: 0; }
+}
+.exp-spine-ghost {
+  animation: ghostSlide 3s ease-in-out infinite;
+}
+@keyframes ghostSlide {
+  0%   { top: 0%; opacity: 0; }
+  5%   { opacity: 1; }
+  95%  { opacity: 0.8; }
+  100% { top: 100%; opacity: 0; }
+}
+
+/* Spine track — faint glowing guide line */
+.exp-spine-track {
+  transition: opacity 0.3s ease;
+  background: linear-gradient(to bottom, 
+    transparent, 
+    rgba(0,229,255,0.12) 5%, 
+    rgba(42,127,255,0.10) 50%, 
+    rgba(167,139,250,0.12) 95%, 
+    transparent
+  ) !important;
+}
+
+/* Spine wrap — subtle outer ambient glow */
+.exp-spine-wrap::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 0; bottom: 0;
+  width: 12px;
+  transform: translateX(-50%);
+  background: linear-gradient(to bottom,
+    transparent,
+    rgba(0,229,255,0.04) 20%,
+    rgba(42,127,255,0.04) 80%,
+    transparent
+  );
+  pointer-events: none;
+  border-radius: 6px;
+  animation: ambientGlow 3s ease-in-out infinite;
+}
+@keyframes ambientGlow {
+  0%,100% { opacity: 0.5; }
+  50%      { opacity: 1; }
+}
+
+
+
+  40%  { box-shadow: 0 0 30px rgba(0,229,255,0.45), 0 0 60px rgba(42,127,255,0.2); }
+  100% { box-shadow: none; }
+}
+
+
+/* ── Cursor global glow ── */
+#imCursor {
+  filter: drop-shadow(0 0 6px rgba(0,229,255,0.5));
+  transition: filter 0.2s ease;
+}
+#imCursor.hovering {
+  filter: drop-shadow(0 0 14px rgba(0,229,255,0.9)) drop-shadow(0 0 28px rgba(42,127,255,0.5));
+}
+.cur-ring {
+  animation: cursorPulse 2s ease-in-out infinite;
+}
+@keyframes cursorPulse {
+  0%,100% { opacity: 0.75; transform: scale(1); }
+  50%      { opacity: 1;    transform: scale(1.08); }
+}
+.cur-dot {
+  box-shadow: 0 0 6px var(--cyan), 0 0 12px rgba(0,229,255,0.4) !important;
+}
+
+
+/* ── Spine tip glow — trailing spark at fill edge ── */
+.exp-spine-fill::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #fff 20%, rgba(0,229,255,0.8) 55%, transparent 80%);
+  box-shadow: 0 0 12px rgba(0,229,255,1), 0 0 28px rgba(42,127,255,0.7), 0 0 50px rgba(167,139,250,0.4);
+  animation: tipGlow 1.5s ease-in-out infinite;
+}
+@keyframes tipGlow {
+  0%,100% { transform: translateX(-50%) scale(1);   opacity: 0.9; }
+  50%      { transform: translateX(-50%) scale(1.4); opacity: 1;   }
+}
+
+/* Ghost shimmer — re-enable with proper opacity control */
+.exp-spine-ghost {
+  opacity: 0;
+  animation: ghostSlide 3.5s ease-in-out infinite !important;
+}
+@keyframes ghostSlide {
+  0%     { top:0%;   opacity:0; }
+  5%     { opacity:1; }
+  92%    { opacity:0.7; }
+  100%   { top:100%; opacity:0; }
+}
+
+
+/* ══ EXPERIENCE CARDS — Clean Scroll Reveal ══ */
+.exp-pair-reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.55s ease, transform 0.55s cubic-bezier(0.22,1,0.36,1);
+  will-change: opacity, transform;
+}
+.exp-pair-reveal.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Left card slides from left, right from right — subtle */
+.exp-pair-reveal .exp-slot.left .exp-card {
+  opacity: 0;
+  transform: translateX(-32px);
+  transition: opacity 0.5s ease 0.08s, transform 0.5s cubic-bezier(0.22,1,0.36,1) 0.08s;
+}
+.exp-pair-reveal .exp-slot.right .exp-card {
+  opacity: 0;
+  transform: translateX(32px);
+  transition: opacity 0.5s ease 0.12s, transform 0.5s cubic-bezier(0.22,1,0.36,1) 0.12s;
+}
+.exp-pair-reveal .exp-center-col {
+  opacity: 0;
+  transform: scale(0.85);
+  transition: opacity 0.4s ease 0s, transform 0.4s cubic-bezier(0.34,1.56,0.64,1) 0s;
+}
+.exp-pair-reveal.show .exp-slot.left .exp-card,
+.exp-pair-reveal.show .exp-slot.right .exp-card {
+  opacity: 1;
+  transform: translateX(0);
+}
+.exp-pair-reveal.show .exp-center-col {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Card border glow on reveal */
+.exp-pair-reveal.show .exp-card {
+  animation: cardEnterGlow 0.9s ease-out 0.15s both;
+}
+@keyframes cardEnterGlow {
+  0%   { box-shadow: 0 0 0px rgba(0,229,255,0); }
+  35%  { box-shadow: 0 0 24px rgba(0,229,255,0.35), 0 8px 32px rgba(42,127,255,0.15); }
+  100% { box-shadow: none; }
+}
+
+/* Year label pop */
+.exp-pair-reveal.show .exp-year {
+  animation: yearPop 0.4s cubic-bezier(0.34,1.56,0.64,1) 0.05s both;
+}
+@keyframes yearPop {
+  0%   { transform: scale(0.5); opacity: 0; }
+  100% { transform: scale(1);   opacity: 1; }
+}
+
+/* Justified text in cards */
+.exp-card .ec-title { text-align: left; }
+.exp-card .ec-sub   { text-align: left; }
+.exp-card .ec-meta  { text-align: left; }
+.exp-card .ec-body  { text-align: justify; }
+
 </style>
   <!-- EmailJS SDK removed (using REST API) -->
 </head>
@@ -589,7 +779,7 @@ footer{background:rgba(4,8,18,.82);border-top:1px solid rgba(255,255,255,.04);pa
 <div id="prog"></div>
 <nav>
   <a href="#hero" class="logo" style="display: flex; align-items: center; gap: 0.7rem; background: none; -webkit-text-fill-color: initial; transition: all 0.3s ease;">
-    <img src="favicon-96x96.png" alt="MP Logo" style="width: 36px; height: 36px; filter: drop-shadow(0 0 10px var(--cyan)); transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);">
+    <img src="favicon-512x512.png" alt="MP Logo" style="width: 44px; height: 44px; filter: drop-shadow(0 0 12px var(--cyan)) drop-shadow(0 0 25px rgba(167,139,250,0.6)); transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);">
     <span style="background: linear-gradient(135deg,var(--cyan),var(--blue2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 800; letter-spacing: -0.02em;">MP.dev</span>
   </a>
   <ul class="nav-links">
@@ -1110,7 +1300,7 @@ const revealObserver = new IntersectionObserver((entries, obs) => {
       obs.unobserve(el);
     }
   });
-}, { rootMargin: "0px 0px -10% 0px" });
+}, { rootMargin: "0px 0px -5% 0px", threshold: 0.08 });
 
 setTimeout(() => {
   document.querySelectorAll('.exp-pair-reveal, .sk-card-reveal, .reveal').forEach(el => {
@@ -1126,17 +1316,49 @@ function onScroll(){
   const vh = window.innerHeight;
   
   requestAnimationFrame(()=>{
-    if(docH > 0) progEl.style.width=(s/docH*100)+'%';
-    bttEl.classList[s>300?'add':'remove']('vis');
+    // 1. Top Progress Line
+    const _progEl = document.getElementById('prog');
+    const _docH = document.documentElement.scrollHeight - window.innerHeight;
+    if(_progEl && _docH > 0) {
+      _progEl.style.width = (s / _docH * 100) + '%';
+    }
     
-    if(expSec && expH){
-      const expTop = expTopRaw - s;
-      expSpine.style.height=(Math.max(0,Math.min(1,(-expTop+vh*.65)/expH))*100)+'%';
+    // 2. Back to top button
+    const _bttEl = document.getElementById('btt');
+    if(_bttEl) _bttEl.classList[s>300?'add':'remove']('vis');
+    
+    // 3. Experience Spine Scroll Fill
+    const _expSpine = document.getElementById('expSpineFill');
+    const _expSec = document.getElementById('experience');
+    if(_expSpine && _expSec){
+      const rect = _expSec.getBoundingClientRect();
+      // Distance from top of viewport to top of section
+      const expTop = rect.top; 
+      // How much has the section scrolled up past 65% of viewport
+      const expPct = Math.max(0, Math.min(1, (-expTop + vh * 0.65) / rect.height));
+      const newH   = (expPct * 100).toFixed(2) + '%';
+      
+      if (_expSpine.style.height !== newH) {
+        _expSpine.style.height = newH;
+        _expSpine.style.filter = 'brightness(1.6)';
+        clearTimeout(_expSpine._dimTimer);
+        _expSpine._dimTimer = setTimeout(() => {
+          _expSpine.style.filter = '';
+        }, 280);
+      }
     }
-    if(skSec && skH){
-      const skTop = skTopRaw - s;
-      skSpine.style.height=(Math.max(0,Math.min(1,(-skTop+vh*.65)/skH))*100)+'%';
+    
+    // 4. Skills Spine Scroll Fill
+    const _skSpine = document.getElementById('skSpineFill');
+    const _skSec = document.getElementById('skills');
+    if(_skSpine && _skSec){
+      const skRect = _skSec.getBoundingClientRect();
+      const skTop = skRect.top;
+      const skPct = Math.max(0, Math.min(1, (-skTop + vh * 0.65) / skRect.height));
+      _skSpine.style.height = (skPct * 100).toFixed(2) + '%';
     }
+    
+    if (window.updateSpineCursor) window.updateSpineCursor();
     _scrollTicking=false;
   });
 }
@@ -1564,18 +1786,46 @@ window.addEventListener('resize',()=>{drawHex('expHex');drawHex('skHex');});
       
       // WRITES
       if(expCursor && expSecRect && expSpRect) {
-        const near = Math.abs(ev.clientX - (expSpRect.left + expSpRect.width/2)) < 160;
-        if(ev.clientY >= expSecRect.top && ev.clientY <= expSecRect.bottom && near){
+        const spineX = expSpRect.left + expSpRect.width / 2;
+        const distX  = Math.abs(ev.clientX - spineX);
+        const inSection = ev.clientY >= expSecRect.top && ev.clientY <= expSecRect.bottom;
+        const near = distX < 160;
+
+        // ── Spine line glow reacts to proximity ──
+        const expFill  = document.getElementById('expSpineFill');
+        const expTrack = document.querySelector('.exp-spine-track');
+        if (expFill) {
+          if (inSection) {
+            // Proximity 0–1: 1 = right on the spine, 0 = far away (up to 400px)
+            const proximity = Math.max(0, 1 - distX / 400);
+            const baseBlur  = 14;
+            const extraBlur = Math.round(proximity * 40);   // up to +40px glow
+            const alpha     = (0.4 + proximity * 0.6).toFixed(2); // 0.4 → 1.0
+            expFill.style.boxShadow =
+              `0 0 ${baseBlur + extraBlur}px rgba(0,229,255,${alpha}),` +
+              `0 0 ${(baseBlur + extraBlur)*2}px rgba(42,127,255,${(proximity*0.5).toFixed(2)}),` +
+              `0 0 ${(baseBlur + extraBlur)*3}px rgba(167,139,250,${(proximity*0.25).toFixed(2)})`;
+            expFill.style.filter = `brightness(${(1 + proximity * 0.8).toFixed(2)})`;
+            if (expTrack) expTrack.style.opacity = (0.5 + proximity * 0.5).toFixed(2);
+          } else {
+            expFill.style.boxShadow = '0 0 14px rgba(0,229,255,.4)';
+            expFill.style.filter    = 'brightness(1)';
+            if (expTrack) expTrack.style.opacity = '1';
+          }
+        }
+
+        // ── Cursor dot follows mouse on spine ──
+        if (inSection && near) {
           expCursor.style.opacity = '1';
           const relY = Math.max(0, Math.min(expSpRect.height, ev.clientY - expSpRect.top));
           expCursor.style.top = relY + 'px';
           const pct = relY / Math.max(1, expSpRect.height);
           const r = Math.round(pct * 255);
-          const g = Math.round(229 * (1 - pct*.55));
-          const b = Math.round(255 * (1 - pct*.5));
+          const g = Math.round(229 * (1 - pct * .55));
+          const b = Math.round(255 * (1 - pct * .5));
           const gCol = `rgb(${r},${g},${b})`;
-          expCursor.style.background = gCol;
-          expCursor.style.boxShadow = `0 0 16px ${gCol},0 0 32px ${gCol}`;
+          expCursor.style.background  = gCol;
+          expCursor.style.boxShadow   = `0 0 16px ${gCol},0 0 32px ${gCol}`;
         } else {
           expCursor.style.opacity = '0';
         }
@@ -1990,5 +2240,16 @@ function submitMockContact(btn) {
   }, 1500);
 }
 </script>
+
+<script>
+// Stagger experience pairs on observe
+(function(){
+  const pairs = document.querySelectorAll('.exp-pair-reveal');
+  pairs.forEach((p, i) => {
+    p.style.transitionDelay = (i * 0.06) + 's';
+  });
+})();
+</script>
+
 </body>
 </html>
